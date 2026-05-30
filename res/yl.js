@@ -363,7 +363,7 @@ window.YL = {
     //资源加载
     var that = this;
     var pathRes = './res';
-    var counterLoad = 0, maxLoad = 24; //资源加载计数器
+    var counterLoad = 0, maxLoad = 25; //资源加载计数器
     var onLoading = "...";
 
 
@@ -492,6 +492,12 @@ window.YL = {
     YL.util.loadScript(pathRes + '/js/yl-io.js' + versionTail, function () {
       onLoading = 'yl-io';
       counterLoad++;
+      
+      // 加载磁贴同步模块
+      YL.util.loadScript(pathRes + '/js/yl-tile-sync.js' + versionTail, function () {
+        onLoading = 'yl-tile-sync';
+        counterLoad++;
+      });
     });
     YL.util.loadScript(pathRes + '/components/calendar/script.js' + versionTail, function () {
       onLoading = 'calendar.script';

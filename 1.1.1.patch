@@ -1,0 +1,132 @@
+diff --git a/package.json b/package.json
+index 70ea5d6..1fff2c6 100644
+--- a/package.json
++++ b/package.json
+@@ -1,38 +1,17 @@
+ {
+-  "name": "ylui",
++  "name": "ylui-desktop",
++  "version": "1.0.0",
++  "description": "YLUI 纯前端桌面框架 - WIN10 风格",
+   "main": "index.html",
+-  "description": "高度可扩展桌面UI",
+-  "version": "2.1.20",
+-  "repository": {
+-    "type": "git",
+-    "url": "https://github.com/yuri2peter/ylui"
+-  },
+   "scripts": {
+-    "start": "http-server ./ -p 5000 -s"
+-  },
+-  "window": {
+-    "title": "YLUI",
+-    "icon": "link.png",
+-    "toolbar": false,
+-    "resizable": true,
+-    "fullscreen": true,
+-    "show_in_taskbar": true,
+-    "frame": true,
+-    "position": "center",
+-    "width": 1366,
+-    "height": 768,
+-    "min_width": 400,
+-    "min_height": 335,
+-    "show": true,
+-    "kiosk": false
+-  },
+-  "webkit": {
+-    "plugin": true,
+-    "java": false,
+-    "page-cache": false
++    "dev": "http-server -p 8080 -c-1",
++    "serve": "http-server -p 8080 -c-1"
+   },
++  "keywords": ["desktop", "vue", "win10"],
++  "author": "YLUI Team",
++  "license": "MIT",
+   "devDependencies": {},
+   "dependencies": {
+-    "http-server": "^13.0.1"
++    "http-server": "^14.1.1"
+   }
+ }
+diff --git a/res/js/yl-render.js b/res/js/yl-render.js
+index e11122a..c5fe2ea 100644
+--- a/res/js/yl-render.js
++++ b/res/js/yl-render.js
+@@ -290,6 +290,19 @@ YL.render = function (data) {
+         var fnResize = that.onResize;
+         fnResize();
+         if (first) $(window).resize(fnResize);
++        
++        // 初始化 TileSync 模块
++        if (YL.TileSync) {
++          YL.TileSync.init();
++          
++          // 如果有本地数据且 first 为 true，应用它
++          if (first) {
++            var savedData = YL.TileSync.loadFromStorage();
++            if (savedData && savedData.tiles && savedData.tiles.length > 0) {
++              YL.TileSync.applyTilesData(savedData.tiles);
++            }
++          }
++        }
+ 
+         //时钟
+         if (first) {
+@@ -2302,6 +2315,14 @@ YL.render = function (data) {
+       },
+     },
+     watch: {
++      tiles: {
++        handler: function (val, oldVal) {
++          if (YL.TileSync && YL.TileSync._initialized) {
++            YL.TileSync.broadcastTilesUpdate();
++          }
++        },
++        deep: true,
++      },
+       shortSetting: {
+         handler: function (val, oldVal) {
+           if (val) {
+diff --git a/res/yl.app.js b/res/yl.app.js
+index b26e17c..b1f2cf9 100644
+--- a/res/yl.app.js
++++ b/res/yl.app.js
+@@ -179,6 +179,10 @@ var ylOnMessage = function (message) {
+       }
+       break;
+     case "ylui-event":
++      // 处理 tilesUpdated 事件
++      if (msg.event === "tilesUpdated" && YL.TileSync) {
++        YL.TileSync.applyTilesData(msg.data.tiles);
++      }
+       YLApp._cbEvent(msg);
+       break;
+   }
+diff --git a/res/yl.js b/res/yl.js
+index 69f228e..ea4855b 100644
+--- a/res/yl.js
++++ b/res/yl.js
+@@ -363,7 +363,7 @@ window.YL = {
+     //资源加载
+     var that = this;
+     var pathRes = './res';
+-    var counterLoad = 0, maxLoad = 24; //资源加载计数器
++    var counterLoad = 0, maxLoad = 25; //资源加载计数器
+     var onLoading = "...";
+ 
+ 
+@@ -492,6 +492,12 @@ window.YL = {
+     YL.util.loadScript(pathRes + '/js/yl-io.js' + versionTail, function () {
+       onLoading = 'yl-io';
+       counterLoad++;
++      
++      // 加载磁贴同步模块
++      YL.util.loadScript(pathRes + '/js/yl-tile-sync.js' + versionTail, function () {
++        onLoading = 'yl-tile-sync';
++        counterLoad++;
++      });
+     });
+     YL.util.loadScript(pathRes + '/components/calendar/script.js' + versionTail, function () {
+       onLoading = 'calendar.script';

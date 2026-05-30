@@ -179,6 +179,10 @@ var ylOnMessage = function (message) {
       }
       break;
     case "ylui-event":
+      // 处理 tilesUpdated 事件
+      if (msg.event === "tilesUpdated" && YL.TileSync) {
+        YL.TileSync.applyTilesData(msg.data.tiles);
+      }
       YLApp._cbEvent(msg);
       break;
   }

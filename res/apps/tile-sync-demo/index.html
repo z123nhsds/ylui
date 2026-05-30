@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>磁贴同步演示</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+            margin-top: 0;
+        }
+        .button {
+            background: #409EFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .button:hover {
+            background: #66b1ff;
+        }
+        .log {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            background: #e6f7ff;
+            border: 1px solid #91d5ff;
+            border-radius: 4px;
+        }
+    </style>
+    <script src="../../yl.app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>🔄 磁贴同步演示</h2>
+        
+        <div class="status" id="status">
+            <strong>状态：</strong>初始化中...
+        </div>
+        
+        <div>
+            <button class="button" onclick="getTiles()">获取当前磁贴</button>
+            <button class="button" onclick="requestSync()">请求同步</button>
+            <button class="button" onclick="clearLog()">清空日志</button>
+        </div>
+        
+        <div class="log" id="log"></div>
+    </div>
+
+    <script>
+        var logElement = document.getElementById('log');
+        var statusElement = document.getElementById('status');
+        
+        function addLog(message) {
+            var time = new Date().toLocaleTimeString();
+            logElement.innerHTML += '[' + time + '] ' + message + '<br>';
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+        
+        function clearLog() {
+            logElement.innerHTML = '';
+        }
+        
+        function updateStatus(text) {
+            statusElement.innerHTML = '<strong>状态：</strong>' + text;
+        }
+        
+        YLApp.onReady(function () {
+            updateStatus('已连接 (ID: ' + YLApp.id + ')');
+            addLog('YLApp 已就绪，准备接收磁贴同步事件');
+            
+            // 监听磁贴更新事件
+            YLApp.onTilesUpdate(function (data) {
+                addLog('收到磁贴更新！时间戳: ' + data.timestamp);
+                addLog('磁贴数据: ' + JSON.stringify(data.tiles, null, 2));
+            });
+        });
+        
+        // 监听所有事件
+        YLApp.onEvent(function (msg) {
+            addLog('收到事件: ' + msg.event + ' 来自: ' + (msg.from || '主应用'));
+        });
+        
+        function getTiles() {
+            YLApp.getTiles(function (data) {
+                if (data) {
+                    addLog('获取到磁贴数据: ' + JSON.stringify(data));
+                } else {
+                    addLog('暂无本地磁贴数据');
+                }
+            });
+        }
+        
+        function requestSync() {
+            YLApp.requestTilesSync();
+            addLog('已发送同步请求');
+        }
+        
+        addLog('页面加载完成，等待 YLApp 就绪...');
+    </script>
+</body>
+</html>

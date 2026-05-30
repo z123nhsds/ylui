@@ -290,6 +290,19 @@ YL.render = function (data) {
         var fnResize = that.onResize;
         fnResize();
         if (first) $(window).resize(fnResize);
+        
+        // 初始化 TileSync 模块
+        if (YL.TileSync) {
+          YL.TileSync.init();
+          
+          // 如果有本地数据且 first 为 true，应用它
+          if (first) {
+            var savedData = YL.TileSync.loadFromStorage();
+            if (savedData && savedData.tiles && savedData.tiles.length > 0) {
+              YL.TileSync.applyTilesData(savedData.tiles);
+            }
+          }
+        }
 
         //时钟
         if (first) {
@@ -2302,6 +2315,14 @@ YL.render = function (data) {
       },
     },
     watch: {
+      tiles: {
+        handler: function (val, oldVal) {
+          if (YL.TileSync && YL.TileSync._initialized) {
+            YL.TileSync.broadcastTilesUpdate();
+          }
+        },
+        deep: true,
+      },
       shortSetting: {
         handler: function (val, oldVal) {
           if (val) {
