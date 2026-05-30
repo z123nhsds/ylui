@@ -1,0 +1,1624 @@
+diff --git a/configs.js b/configs.js
+index 39fcf1b..443c49f 100644
+--- a/configs.js
++++ b/configs.js
+@@ -1,64 +1,50 @@
+ YL.static = {
+   /** "关于"信息 */
+-  softwareName: 'YLUI DEMO', //网站名。请在此处填写您自己的网站名，如王小明的博客
+-  version: "1.2.0", // 网站版本号
+-  iconBtnStart: 'yoast', //主图标
+-  author: 'YLUI Team',//作者
+-  contactInformation: 'ylui@yuri2.cn',//联系方式
+-  officialWebsite: 'https://ylui.yuri2.cn',//软件官网
+-  welcome: '本网站UI由 YLUI 强力驱动\n更多信息：https://ylui.yuri2.cn',//加载完毕控制台提示信息
+-  copyrightDetail: 'YLUI 桌面框架',//版权详细信息
+-  otherStatements: '',//其他信息（可留空）
++  softwareName: 'YLUI DEMO',
++  version: "1.2.0",
++  iconBtnStart: 'yoast',
++  author: 'YLUI Team',
++  contactInformation: 'ylui@yuri2.cn',
++  officialWebsite: 'https://ylui.yuri2.cn',
++  welcome: '本网站UI由 YLUI 强力驱动\n更多信息：https://ylui.yuri2.cn',
++  copyrightDetail: 'YLUI 桌面框架',
++  otherStatements: '',
+ 
+   /**————————————————————————————————————————————————————————————————————————————————————————————*/
+   /** YLUI基础设置 */
+-  lang: 'zh-cn', //语言
+-  localStorageName: "ylui-storage", //ls存储名
+-  lockedApps: ['yl-system', 'yl-color-picker', 'ylui-fa', 'yl-browser', 'ylui-documents'], // 锁定的应用（不允许被脚本修改）
+-  trustedApps: ['yl-system'], // 受信任的应用（可以使用敏感API）
+-  debug: false,//启用更多调试信息
+-  beforeOnloadEnable: true,//启用关闭前询问（打包app时请关闭防止出错）
+-  WarningPerformanceInIE: true,//在IE下提示体验不佳信息
+-  languages: {}, //推荐留空，自动从文件加载
+-  changeable: true,//存档数据是否可被普通用户修改
+-  dataCenter: true,//是否展示数据管理中心
++  lang: 'zh-cn',
++  localStorageName: "ylui-storage",
++  lockedApps: ['yl-system', 'yl-color-picker', 'ylui-fa', 'yl-browser', 'ylui-documents'],
++  trustedApps: ['yl-system'],
++  debug: false,
++  beforeOnloadEnable: true,
++  WarningPerformanceInIE: true,
++  languages: {},
++  changeable: true,
++  dataCenter: true,
+ 
+   /**————————————————————————————————————————————————————————————————————————————————————————————*/
+   /** YLUI注册信息 */
+-  authorization: '社区版',//授权类型
+-  serialNumber: null,//序列号
++  authorization: '社区版',
++  serialNumber: null,
+ 
+   /**————————————————————————————————————————————————————————————————————————————————————————————*/
+   /** 数据存储配置 - 与后台接口对接 */
+   dataStorage: {
+-    // 数据加载方式: 'localStorage' | 'remote' | 'hybrid'
+     mode: 'localStorage',
+-
+-    // 远程接口配置 (当 mode 为 'remote' 或 'hybrid' 时使用)
+     remote: {
+-      // 数据加载接口
+       loadUrl: '/api/data/load',
+-      // 数据保存接口
+       saveUrl: '/api/data/save',
+-      // 请求方法
+       method: 'POST',
+-      // 请求头
+       headers: {
+         'Content-Type': 'application/json'
+       },
+-      // 请求超时时间(毫秒)
+       timeout: 30000,
+-      // 是否启用自动保存
+       autoSave: false,
+-      // 自动保存间隔(毫秒)
+       autoSaveInterval: 30000
+     },
+-
+-    // 混合模式配置 (当 mode 为 'hybrid' 时使用)
+     hybrid: {
+-      // 优先使用本地存储
+       preferLocal: true,
+-      // 后台同步间隔(毫秒)
+       syncInterval: 60000
+     }
+   },
+@@ -66,13 +52,9 @@ YL.static = {
+   /**————————————————————————————————————————————————————————————————————————————————————————————*/
+   /** 应用组织框架配置 */
+   appFramework: {
+-    // 是否启用跨域 APP 通信
+     enableCrossOriginCommunication: true,
+-    // 是否启用数据序列化
+     enableDataSerialization: true,
+-    // 数据序列化格式: 'json' | 'xml'
+     serializationFormat: 'json',
+-    // 主题色
+     themeColors: [
+       '#FFB900', '#FF8C00', '#F7630C', '#CA5010', '#DA3B01', '#EF6950',
+       '#D13438', '#E74856', '#E81123', '#EA005E', '#C30052', '#E3008C',
+@@ -85,50 +67,30 @@ YL.static = {
+   /**————————————————————————————————————————————————————————————————————————————————————————————*/
+   /** 响应式布局配置 - PC/平板/手机适配 */
+   responsive: {
+-    // 是否启用响应式布局
+     enabled: true,
+-    // 小屏幕判定阈值 (px) - 平板/手机
+     smallScreenWidth: 768,
+-    // 移动端菜单模式: 'left' | 'bottom'
+     mobileMenuMode: 'bottom',
+-    // 是否允许手势操作
+     touchGestures: true,
+-    // 移动端图标尺寸
+     mobileIconSize: 56,
+-    // 平板图标尺寸
+     tabletIconSize: 60,
+-    // PC图标尺寸
+     desktopIconSize: 64,
+-    // 是否启用水平屏幕检测
+     detectHorizontalScreen: true,
+-    // 水平屏幕判定阈值 (比例)
+     horizontalScreenRatio: 1.3,
+-    // 磁贴尺寸配置
+     tileSizes: {
+       mobile: 60,
+       tablet: 80,
+       desktop: 100
+     },
+-    // 任务栏配置
+     taskBar: {
+-      // 移动端任务栏高度
+       mobileHeight: 48,
+-      // 平板任务栏高度
+       tabletHeight: 40,
+-      // PC任务栏高度
+       desktopHeight: 40,
+-      // 是否在移动端显示文字
+       mobileShowText: false
+     },
+-    // 开始菜单配置
+     startMenu: {
+-      // 移动端宽度 (百分比)
+       mobileWidthPercent: 100,
+-      // 平板宽度 (百分比)
+       tabletWidthPercent: 80,
+-      // PC宽度 (固定值)
+       desktopWidth: 800,
+-      // 是否显示磁贴 (移动端)
+       mobileShowTiles: false
+     }
+   },
+@@ -136,46 +98,59 @@ YL.static = {
+   /**————————————————————————————————————————————————————————————————————————————————————————————*/
+   /** Windows 风格组件配置 */
+   windowsStyle: {
+-    // 开始菜单
+     startMenu: {
+-      // 是否启用玻璃模糊效果
+       blurEffect: true,
+-      // 菜单位置: 'bottom' | 'left'
+       position: 'bottom',
+-      // 菜单动画时长 (ms)
+       animationDuration: 300
+     },
+-    // 磁贴
+     tiles: {
+-      // 是否启用动态磁贴效果
+       animate: true,
+-      // 磁贴悬停缩放比例
+       hoverScale: 1.05,
+-      // 磁贴圆角大小
+       borderRadius: 4
+     },
+-    // 通知中心
+     notification: {
+-      // 是否启用通知动画
+       animate: true,
+-      // 通知停留时间 (ms)
+       duration: 5000,
+-      // 最大通知数量
+       maxCount: 10,
+-      // 通知位置: 'bottom-right' | 'bottom-left'
+       position: 'bottom-right'
+     },
+-    // 任务栏
+     taskBar: {
+-      // 任务栏位置: 'bottom' | 'top'
+       position: 'bottom',
+-      // 是否自动隐藏
+       autoHide: false,
+-      // 任务栏图标大小
+       iconSize: 20
+     }
+   },
+ 
++  /**————————————————————————————————————————————————————————————————————————————————————————————*/
++  /** 可视化开发配置示例 */
++  visualDevelopment: {
++    workspaceExample: {
++      namespace: 'ylui-workspace-demo',
++      serializer: 'json',
++      bridge: {
++        requestAction: 'workspace:get',
++        syncEvent: 'workspace:updated',
++        targetApp: 'yl-system'
++      },
++      backend: {
++        loadUrl: '/api/data/load',
++        saveUrl: '/api/data/save'
++      },
++      launcher: {
++        sidebarApps: ['yl-system', 'yl-browser', 'ylui-documents'],
++        menuApps: ['yl-system', 'yl-browser', 'ylui-documents']
++      },
++      tiles: [
++        { app: 'yl-system', title: '系统设置', group: '工作区', size: 'medium', color: '#0078D7' },
++        { app: 'yl-browser', title: '业务看板', group: '工作区', size: 'wide', color: '#107C10' },
++        { app: 'ylui-documents', title: '开发文档', group: '工作区', size: 'wide', color: '#D83B01' }
++      ],
++      notifications: [
++        { title: '组织框架已启用', content: '跨域通信、Vue 序列化与后台存取接口已经可用。' }
++      ]
++    }
++  },
++
+   /**————————————————————————————————————————————————————————————————————————————————————————————*/
+   /** 可视化开发配置示例 (configs.js)
+    *
+@@ -184,52 +159,39 @@ YL.static = {
+    * 使用示例:
+    *
+    * YL.onLoad(function() {
+-   *   // 修改主题色
+    *   YL.setThemeColor('#FF5722');
+-   *
+-   *   // 打开指定应用
+    *   YL.open('yl-system');
+-   *
+-   *   // 监听应用事件
+-   *   YL.crossApp.on('appOpened', function(data) {
+-   *     console.log('应用已打开:', data);
+-   *   });
++   *   YL.msg('组织框架', '当前布局配置已生效');
+    * });
+    *
+    * 跨域APP通信示例:
+    *
+-   * // 发送请求到其他APP
+-   * YL.crossApp.request('target-app-id', 'getData', {}, function(err, result) {
++   * YLApp.framework.handle('workspace:get', function(payload) {
++   *   return { updatedAt: Date.now(), payload: payload };
++   * });
++   *
++   * YLApp.requestApp('yl-system', 'workspace:get', { scope: 'dashboard' }, function(err, result) {
+    *   if (!err) {
+    *     console.log('收到数据:', result);
+    *   }
+    * });
+    *
+-   * // 广播事件到所有APP
+-   * YL.crossApp.broadcast('dataUpdated', { key: 'value' });
++   * YLApp.broadcastApp('workspace:updated', { key: 'value' });
++   *
++   * var store = YLApp.createStore({
++   *   namespace: 'ylui-workspace-demo',
++   *   state: { filters: [], widgets: [] }
++   * });
+    *
+-   * // 序列化数据
+-   * var jsonStr = YL.crossApp.serialize({ foo: 'bar' }, 'json');
+-   * var xmlStr = YL.crossApp.serialize({ foo: 'bar' }, 'xml');
++   * console.log(store.serialize('json'));
++   * store.save();
+    *
+    * 响应式布局使用示例:
+    *
+-   * YL.onLoad(function() {
++   * YL.onReady(function() {
+    *   var runtime = YL.vue.runtime;
+-   *
+-   *   // 检测设备类型
+-   *   if (runtime.isSmallScreen) {
+-   *     console.log('当前设备: 手机/平板');
+-   *   } else {
+-   *     console.log('当前设备: PC');
+-   *   }
+-   *
+-   *   // 检测屏幕方向
+-   *   if (runtime.isHorizontalScreen) {
+-   *     console.log('当前屏幕: 横屏');
+-   *   } else {
+-   *     console.log('当前屏幕: 竖屏');
+-   *   }
++   *   console.log(runtime.isSmallScreen ? '当前设备: 手机/平板' : '当前设备: PC');
++   *   console.log(runtime.isHorizontalScreen ? '当前屏幕: 横屏' : '当前屏幕: 竖屏');
+    * });
+    */
+ 
+diff --git a/documents/index.html b/documents/index.html
+index ac41c48..b0e1512 100644
+--- a/documents/index.html
++++ b/documents/index.html
+@@ -4,6 +4,11 @@
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>YLUI 文档</title>
++    <script>
++        if (/\/documents$/.test(window.location.pathname)) {
++            window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
++        }
++    </script>
+     <script src="../res/components/vue.min.js"></script>
+     <script src="../res/components/jquery-2.2.4.min.js"></script>
+     <link type="text/css" rel="stylesheet" href="../res/components/font-awesome-4.7.0/css/font-awesome.min.css"/>
+@@ -11,11 +16,22 @@
+         * { margin: 0; padding: 0; box-sizing: border-box; }
+         body {
+             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+-            height: 100vh; display: flex; flex-direction: column; background-color: #f5f5f5;
++            height: 100vh;
++            display: flex;
++            flex-direction: column;
++            background-color: #f5f5f5;
+         }
+-        .header { background-color: #2c3e50; color: white; padding: 15px 20px; display: flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+-        .header h1 { font-size: 20px; margin-left: 10px; }
+-        .main { display: flex; flex: 1; overflow: hidden; }
++        .header {
++            background-color: #2c3e50;
++            color: white;
++            padding: 15px 20px;
++            display: flex;
++            align-items: center;
++            gap: 10px;
++            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
++        }
++        .header h1 { font-size: 20px; }
++        .main { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+         .sidebar { width: 280px; background-color: white; border-right: 1px solid #ddd; overflow-y: auto; flex-shrink: 0; }
+         .sidebar-item { padding: 12px 20px; cursor: pointer; border-left: 3px solid transparent; transition: all 0.2s; font-size: 14px; }
+         .sidebar-item:hover { background-color: #ecf0f1; }
+@@ -25,16 +41,25 @@
+         .content h1 { color: #2c3e50; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #3498db; }
+         .content h2 { color: #34495e; margin: 25px 0 15px; }
+         .content h3 { color: #7f8c8d; margin: 20px 0 10px; }
+-        .content p { line-height: 1.8; margin: 12px 0; color: #34495e; }
++        .content p { line-height: 1.8; margin: 12px 0; color: #34495e; word-break: break-word; }
+         .content ul, .content ol { margin: 12px 0 12px 30px; line-height: 1.8; color: #34495e; }
+         .content li { margin: 6px 0; }
+         .content code { background-color: #ecf0f1; padding: 2px 6px; border-radius: 3px; font-family: "Courier New", monospace; color: #e74c3c; }
+         .content pre { background-color: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 15px 0; }
+         .content pre code { background: none; color: inherit; padding: 0; }
+         .content blockquote { border-left: 4px solid #3498db; padding-left: 15px; margin: 15px 0; color: #7f8c8d; font-style: italic; }
+-        .loading { display: flex; justify-content: center; align-items: center; height: 100%; color: #7f8c8d; }
++        .content a { color: #2980b9; text-decoration: none; }
++        .content a:hover { text-decoration: underline; }
++        .content img { display: block; max-width: 100%; border-radius: 8px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); margin: 16px 0; }
++        .loading { display: flex; justify-content: center; align-items: center; height: 100%; color: #7f8c8d; gap: 12px; }
+         .loading i { font-size: 30px; animation: spin 1s linear infinite; }
+         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
++        @media screen and (max-width: 768px) {
++            .main { flex-direction: column; }
++            .sidebar { width: 100%; max-height: 220px; border-right: none; border-bottom: 1px solid #ddd; }
++            .content { padding: 18px; }
++            .header h1 { font-size: 18px; }
++        }
+     </style>
+ </head>
+ <body>
+@@ -51,7 +76,7 @@
+                 <div class="sidebar-item" :class="{active: currentDoc === '3.目录结构.md'}" @click="loadDoc('3.目录结构.md')">目录结构</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '4.运行流程.md'}" @click="loadDoc('4.运行流程.md')">运行流程</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '5.全局配置.md'}" @click="loadDoc('5.全局配置.md')">全局配置</div>
+-                
++
+                 <div class="sidebar-group-title">存档数据</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/1.概念.md'}" @click="loadDoc('6.存档数据/1.概念.md')">概念</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/2.配置.md'}" @click="loadDoc('6.存档数据/2.配置.md')">配置</div>
+@@ -60,28 +85,32 @@
+                 <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/5.磁贴.md'}" @click="loadDoc('6.存档数据/5.磁贴.md')">磁贴</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/6.开始菜单.md'}" @click="loadDoc('6.存档数据/6.开始菜单.md')">开始菜单</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/7.窗体数据.md'}" @click="loadDoc('6.存档数据/7.窗体数据.md')">窗体数据</div>
+-                
++
+                 <div class="sidebar-group-title">高级特性</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/1.全局API.md'}" @click="loadDoc('7.高级/1.全局API.md')">全局API</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/2.APP 高级特性.md'}" @click="loadDoc('7.高级/2.APP 高级特性.md')">APP高级特性</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/3.窗体API.md'}" @click="loadDoc('7.高级/3.窗体API.md')">窗体API</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/4.窗体通信.md'}" @click="loadDoc('7.高级/4.窗体通信.md')">窗体通信</div>
+             </div>
+-            <div class="content" v-html="renderedContent">
++            <div class="content">
+                 <div class="loading" v-if="loading">
+                     <i class="fa fa-spinner"></i>
++                    <span>正在加载文档…</span>
+                 </div>
++                <div v-else v-html="renderedContent"></div>
+             </div>
+         </div>
+     </div>
+-    
++
+     <script>
+         new Vue({
+             el: '#app',
+             data: {
+                 currentDoc: '1.前言.md',
+                 content: '',
+-                loading: true
++                loading: true,
++                docsBasePath: './',
++                currentDocUrl: ''
+             },
+             computed: {
+                 renderedContent: function() {
+@@ -89,72 +118,144 @@
+                 }
+             },
+             created: function() {
+-                this.loadDoc('1.前言.md');
++                var initialDoc = this.getRequestedDoc();
++                this.loadDoc(initialDoc, false);
++                window.addEventListener('hashchange', this.handleHashChange.bind(this));
+             },
+             methods: {
+-                loadDoc: function(docPath) {
++                getRequestedDoc: function() {
++                    var hash = window.location.hash.replace(/^#/, '');
++                    return hash ? decodeURIComponent(hash) : '1.前言.md';
++                },
++                handleHashChange: function() {
++                    var doc = this.getRequestedDoc();
++                    if (doc !== this.currentDoc) {
++                        this.loadDoc(doc, false);
++                    }
++                },
++                normalizePath: function(path) {
++                    var parts = path.split('/');
++                    var normalized = [];
++                    for (var i = 0; i < parts.length; i++) {
++                        var part = parts[i];
++                        if (!part || part === '.') {
++                            continue;
++                        }
++                        if (part === '..') {
++                            normalized.length && normalized.pop();
++                            continue;
++                        }
++                        normalized.push(part);
++                    }
++                    return normalized.join('/');
++                },
++                escapeHtml: function(text) {
++                    return String(text)
++                        .replace(/&/g, '&amp;')
++                        .replace(/</g, '&lt;')
++                        .replace(/>/g, '&gt;')
++                        .replace(/"/g, '&quot;')
++                        .replace(/'/g, '&#39;');
++                },
++                getDocDirectory: function(docPath) {
++                    var index = docPath.lastIndexOf('/');
++                    return index > -1 ? docPath.slice(0, index + 1) : '';
++                },
++                resolveDocUrl: function(docPath) {
++                    return this.docsBasePath + this.normalizePath(docPath);
++                },
++                resolveRelativeUrl: function(rawUrl) {
++                    if (!rawUrl || /^(https?:)?\/\//.test(rawUrl) || /^(data|mailto|javascript):/i.test(rawUrl) || rawUrl.charAt(0) === '#') {
++                        return rawUrl;
++                    }
++                    return this.resolveDocUrl(this.getDocDirectory(this.currentDoc) + rawUrl);
++                },
++                loadDoc: function(docPath, syncHash) {
+                     var self = this;
+                     this.loading = true;
+-                    this.currentDoc = docPath;
+-                    
++                    this.currentDoc = this.normalizePath(docPath);
++                    this.currentDocUrl = this.resolveDocUrl(this.currentDoc);
++                    if (syncHash !== false) {
++                        window.location.hash = encodeURIComponent(this.currentDoc);
++                    }
+                     $.ajax({
+-                        url: './' + docPath,
++                        url: this.currentDocUrl,
+                         type: 'GET',
+                         cache: false,
+                         success: function(text) {
+                             self.loading = false;
+                             self.content = text;
+                         },
+-                        error: function(xhr, status, error) {
+-                            if (xhr.status === 0 && xhr.responseText) {
+-                                self.loading = false;
+-                                self.content = xhr.responseText;
+-                                return;
+-                            }
++                        error: function() {
+                             self.loading = false;
+-                            self.content = '# 文档加载失败\n\n无法加载文档：' + docPath + '\n\n请检查文档文件是否存在。';
++                            self.content = '# 文档加载失败\n\n无法加载文档：' + self.currentDoc + '\n\n路径：' + self.currentDocUrl + '\n\n请检查文档文件是否存在。';
+                         }
+                     });
+                 },
+-                
+                 markdownToHtml: function(md) {
+                     if (!md) return '';
+-                    
+-                    var html = md;
++                    var self = this;
++                    var html = md.replace(/\r\n/g, '\n');
++                    var codeBlocks = [];
++
++                    html = html.replace(/```([\s\S]*?)```/g, function(match, code) {
++                        var token = '__CODE_BLOCK_' + codeBlocks.length + '__';
++                        codeBlocks.push('<pre><code>' + self.escapeHtml(code.trim()) + '</code></pre>');
++                        return token;
++                    });
++
+                     html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+                     html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+                     html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+-                    html = html.replace(/```([\s\S]*?)```/g, function(match, code) {
+-                        return '<pre><code>' + code.trim() + '</code></pre>';
++                    html = html.replace(/`([^`]+)`/g, function(match, code) {
++                        return '<code>' + self.escapeHtml(code) + '</code>';
+                     });
+-                    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+-                    html = html.replace(/^- (.*$)/gm, '<li>$1</li>');
+-                    
++                    html = html.replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>');
++                    html = html.replace(/^\- (.*$)/gm, '<li>$1</li>');
++
+                     var lines = html.split('\n');
+-                    var inList = false;
+                     var result = [];
++                    var inList = false;
+                     for (var i = 0; i < lines.length; i++) {
+                         var line = lines[i];
+-                        if (line.startsWith('<li>')) {
+-                            if (!inList) { result.push('<ul>'); inList = true; }
++                        if (line.indexOf('<li>') === 0) {
++                            if (!inList) {
++                                result.push('<ul>');
++                                inList = true;
++                            }
+                             result.push(line);
+                         } else {
+-                            if (inList) { result.push('</ul>'); inList = false; }
++                            if (inList) {
++                                result.push('</ul>');
++                                inList = false;
++                            }
+                             result.push(line);
+                         }
+                     }
+-                    if (inList) result.push('</ul>');
++                    if (inList) {
++                        result.push('</ul>');
++                    }
+                     html = result.join('\n');
+-                    
+-                    html = html.replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>');
+-                    html = html.replace(/^(?!<[hulbpr])(.*)$/gm, function(match, p1) {
+-                        if (p1.trim() === '') return '';
+-                        return '<p>' + p1 + '</p>';
++
++                    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, function(match, alt, url) {
++                        return '<img src="' + self.escapeHtml(self.resolveRelativeUrl(url)) + '" alt="' + self.escapeHtml(alt) + '">';
++                    });
++
++                    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, text, url) {
++                        if (/\.md($|[?#])/.test(url)) {
++                            var docPath = self.normalizePath(self.getDocDirectory(self.currentDoc) + url).replace(/#.*$/, '').replace(/\?.*$/, '');
++                            return '<a href="#' + encodeURIComponent(docPath) + '">' + self.escapeHtml(text) + '</a>';
++                        }
++                        return '<a href="' + self.escapeHtml(self.resolveRelativeUrl(url)) + '" target="_blank">' + self.escapeHtml(text) + '</a>';
+                     });
+-                    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
++
+                     html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                     html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+-                    
++                    html = html.replace(/^(?!\s*$|<h\d|<ul>|<\/ul>|<li>|<blockquote>|<pre>|__CODE_BLOCK_)(.+)$/gm, '<p>$1</p>');
++                    html = html.replace(/__CODE_BLOCK_(\d+)__/g, function(match, index) {
++                        return codeBlocks[parseInt(index, 10)] || '';
++                    });
++
+                     return html;
+                 }
+             }
+diff --git a/onLoad.js b/onLoad.js
+index 6619420..1a8cb8b 100644
+--- a/onLoad.js
++++ b/onLoad.js
+@@ -6,40 +6,163 @@
+  */
+ 
+ YL.onLoad(function () {
+-  // 读取url中load参数，如localhost/ylui/index.html?load=basic
+   var load = Yuri2.parseURL().params.load;
+   var file;
+-  
+-  // 先检查数据存储模式
+   var storageMode = YL.static.dataStorage && YL.static.dataStorage.mode || 'localStorage';
+-  
++  var originalMsg = YL.msg;
++  var runtimeEnhancementsInstalled = false;
++
++  var installRuntimeEnhancements = function () {
++    if (runtimeEnhancementsInstalled) {
++      return;
++    }
++    runtimeEnhancementsInstalled = true;
++
++    var applyPreviewIndexes = function () {
++      if (!YL.vue || !YL.vue.msgPres) {
++        return;
++      }
++      var previews = [];
++      for (var id in YL.vue.msgPres) {
++        if (YL.vue.msgPres[id]) {
++          previews.push({
++            id: id,
++            createdAt: YL.vue.msgPres[id].createdAt || 0
++          });
++        }
++      }
++      previews.sort(function (a, b) {
++        return a.createdAt - b.createdAt;
++      });
++      previews.forEach(function (item, index) {
++        YL.vue.msgPres[item.id].index = index;
++      });
++    };
++
++    YL.msg = function (title, content) {
++      if (!YL.vue || !YL.vue.setWithID) {
++        return originalMsg.call(YL, title, content);
++      }
++      var notification = YL.static.windowsStyle && YL.static.windowsStyle.notification || {};
++      var duration = notification.duration || 5000;
++      var maxCount = notification.maxCount || 10;
++      var createdAt = Date.now();
++      var options = {
++        title: title,
++        content: content,
++        key: Math.random(),
++        createdAt: createdAt
++      };
++      YL.vue.setWithID(YL.vue.center.msg, options, 'msg-');
++      YL.vue.center.open || YL.vue.center.unread++;
++      YL.vue.center.msgNum++;
++
++      var previewIds = [];
++      for (var previewId in YL.vue.msgPres) {
++        if (YL.vue.msgPres[previewId]) {
++          previewIds.push(previewId);
++        }
++      }
++      if (previewIds.length >= maxCount) {
++        previewIds.sort(function (a, b) {
++          return (YL.vue.msgPres[a].createdAt || 0) - (YL.vue.msgPres[b].createdAt || 0);
++        });
++        YL.vue.msgPres[previewIds[0]] = null;
++      }
++
++      var msgPreID = YL.vue.setWithID(YL.vue.msgPres, Yuri2.jsonMerge(options, {
++        index: 0
++      }), 'msgPre-');
++      applyPreviewIndexes();
++      setTimeout(function () {
++        if (YL.vue && YL.vue.msgPres && YL.vue.msgPres[msgPreID]) {
++          YL.vue.msgPres[msgPreID] = null;
++          applyPreviewIndexes();
++        }
++      }, duration);
++      return msgPreID;
++    };
++
++    var applyRuntimeConfigs = function () {
++      if (!YL.vue || !YL.vue.runtime) {
++        return;
++      }
++      var responsive = YL.static.responsive || {};
++      var responsiveTaskBar = responsive.taskBar || {};
++      var responsiveStartMenu = responsive.startMenu || {};
++      var tileSizes = responsive.tileSizes || {};
++      var windowsTaskBar = YL.static.windowsStyle && YL.static.windowsStyle.taskBar || {};
++      var clientSize = Yuri2.getClientSize();
++      var smallScreenWidth = responsive.smallScreenWidth || 768;
++      var isResponsiveEnabled = responsive.enabled !== false;
++      var isTablet = clientSize.width > smallScreenWidth && clientSize.width <= 1024;
++      var isSmallScreen = isResponsiveEnabled && clientSize.width <= smallScreenWidth;
++      var taskBarHeight = isSmallScreen
++        ? (responsiveTaskBar.mobileHeight || 48)
++        : (isTablet ? (responsiveTaskBar.tabletHeight || 40) : (responsiveTaskBar.desktopHeight || 40));
++      var iconSize = isSmallScreen
++        ? (responsive.mobileIconSize || 56)
++        : (isTablet ? (responsive.tabletIconSize || 60) : (responsive.desktopIconSize || 64));
++      var tileSize = isSmallScreen
++        ? (tileSizes.mobile || 60)
++        : (isTablet ? (tileSizes.tablet || 80) : (tileSizes.desktop || 100));
++      var menuWidth = isSmallScreen
++        ? Math.round(clientSize.width * ((responsiveStartMenu.mobileWidthPercent || 100) / 100))
++        : (isTablet
++          ? Math.round(clientSize.width * ((responsiveStartMenu.tabletWidthPercent || 80) / 100))
++          : (responsiveStartMenu.desktopWidth || 800));
++      var horizontalRatio = responsive.horizontalScreenRatio || 1.3;
++      var isHorizontalScreen = responsive.detectHorizontalScreen === false
++        ? clientSize.width > clientSize.height
++        : (clientSize.width / Math.max(clientSize.height, 1)) >= horizontalRatio;
++
++      YL.vue.configs.topTaskBar = windowsTaskBar.position === 'top';
++      YL.vue.runtime.clientSize.width = clientSize.width;
++      YL.vue.runtime.clientSize.height = clientSize.height;
++      YL.vue.runtime.desktopSize.width = clientSize.width;
++      YL.vue.runtime.desktopSize.height = Math.max(clientSize.height - taskBarHeight, 0);
++      YL.vue.runtime.isSmallScreen = isSmallScreen;
++      YL.vue.runtime.isHorizontalScreen = isHorizontalScreen;
++      YL.vue.startMenu.width = menuWidth;
++      YL.vue.runtime.startMenu.width = Math.min(menuWidth, clientSize.width);
++      YL.vue.runtime.startMenu.height = Math.min(YL.vue.startMenu.height, YL.vue.runtime.desktopSize.height);
++      YL.vue.runtime.shortcutWidth = iconSize + 12;
++      YL.vue.runtime.shortcutHeight = iconSize + (isSmallScreen ? 26 : 32);
++      YL.vue.runtime.tileSize = tileSize;
++      YL.vue.runtime.tilesWidth = (tileSize + 4) * 6;
++      YL.vue.runtime.tilesGroupNum = isSmallScreen ? 1 : (isTablet ? 2 : 3);
++      YL.vue.runtime.shortcutsGrid.x = parseInt(YL.vue.runtime.desktopSize.width / Math.max(YL.vue.runtime.shortcutWidth, 1));
++      YL.vue.runtime.shortcutsGrid.y = parseInt(YL.vue.runtime.desktopSize.height / Math.max(YL.vue.runtime.shortcutHeight, 1));
++    };
++
++    YL.onReady(function () {
++      applyRuntimeConfigs();
++      window.addEventListener('resize', function () {
++        setTimeout(applyRuntimeConfigs, 0);
++      });
++    });
++  };
++
++  installRuntimeEnhancements();
++
+   if (storageMode === 'remote' || storageMode === 'hybrid') {
+-    // 远程模式或混合模式：优先尝试从远程加载
+     YL.loadRemoteData(function(err, data) {
+       if (!err && data) {
+-        // 远程加载成功
+         YL.init(data);
+-        
+-        // 混合模式下同时保存到本地
+         if (storageMode === 'hybrid' && YL.dataSync) {
+           YL.dataSync.saveToLocal(data);
+         }
+-        
+-        // 初始化数据存储系统
+         YL.initDataStorage && YL.initDataStorage();
+       } else {
+-        // 远程加载失败，回退到本地模式
+         YL.debug('远程加载失败，使用本地数据');
+         loadLocalData();
+       }
+     });
+   } else {
+-    // 本地存储模式
+     loadLocalData();
+   }
+-  
++
+   function loadLocalData() {
+-    // 当load === 'ylui-storage'时，尝试加载浏览器缓存
+     if (load === YL.static.localStorageName && localStorage.getItem(YL.static.localStorageName)) {
+       YL.init();
+       YL.initDataStorage && YL.initDataStorage();
+@@ -47,8 +170,7 @@ YL.onLoad(function () {
+     } else if (load === YL.static.localStorageName) {
+       file = 'basic';
+     }
+-    
+-    // 从json文件读取
++
+     file = file || load || 'basic';
+     var save = /^\w+$/.test(file) ? './saves/' + file + '.json' : file;
+     Yuri2.loadContentFromUrl(save, 'GET', function (err, text) {
+diff --git a/res/apps/yl-documents/index.html b/res/apps/yl-documents/index.html
+index 3c500fc..e25c7eb 100644
+--- a/res/apps/yl-documents/index.html
++++ b/res/apps/yl-documents/index.html
+@@ -31,14 +31,15 @@
+             display: flex;
+             align-items: center;
+             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
++            gap: 10px;
+         }
+         .header h1 {
+             font-size: 20px;
+-            margin-left: 10px;
+         }
+         .main {
+             display: flex;
+             flex: 1;
++            min-height: 0;
+             overflow: hidden;
+         }
+         .sidebar {
+@@ -94,6 +95,7 @@
+             line-height: 1.8;
+             margin: 12px 0;
+             color: #34495e;
++            word-break: break-word;
+         }
+         .content ul, .content ol {
+             margin: 12px 0 12px 30px;
+@@ -130,12 +132,27 @@
+             color: #7f8c8d;
+             font-style: italic;
+         }
++        .content a {
++            color: #2980b9;
++            text-decoration: none;
++        }
++        .content a:hover {
++            text-decoration: underline;
++        }
++        .content img {
++            display: block;
++            max-width: 100%;
++            border-radius: 8px;
++            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
++            margin: 16px 0;
++        }
+         .loading {
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             height: 100%;
+             color: #7f8c8d;
++            gap: 12px;
+         }
+         .loading i {
+             font-size: 30px;
+@@ -145,24 +162,22 @@
+             from { transform: rotate(0deg); }
+             to { transform: rotate(360deg); }
+         }
+-        .toc {
+-            margin-top: 20px;
+-            padding: 15px;
+-            background-color: #f8f9fa;
+-            border-radius: 5px;
+-        }
+-        .toc h3 {
+-            margin-top: 0;
+-        }
+-        .toc ul {
+-            margin: 10px 0 0 20px;
+-        }
+-        .toc a {
+-            color: #3498db;
+-            text-decoration: none;
+-        }
+-        .toc a:hover {
+-            text-decoration: underline;
++        @media screen and (max-width: 768px) {
++            .main {
++                flex-direction: column;
++            }
++            .sidebar {
++                width: 100%;
++                max-height: 220px;
++                border-right: none;
++                border-bottom: 1px solid #ddd;
++            }
++            .content {
++                padding: 18px;
++            }
++            .header h1 {
++                font-size: 18px;
++            }
+         }
+     </style>
+ </head>
+@@ -180,7 +195,7 @@
+                 <div class="sidebar-item" :class="{active: currentDoc === '3.目录结构.md'}" @click="loadDoc('3.目录结构.md')">目录结构</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '4.运行流程.md'}" @click="loadDoc('4.运行流程.md')">运行流程</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '5.全局配置.md'}" @click="loadDoc('5.全局配置.md')">全局配置</div>
+-                
++
+                 <div class="sidebar-group-title">存档数据</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/1.概念.md'}" @click="loadDoc('6.存档数据/1.概念.md')">概念</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/2.配置.md'}" @click="loadDoc('6.存档数据/2.配置.md')">配置</div>
+@@ -189,21 +204,23 @@
+                 <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/5.磁贴.md'}" @click="loadDoc('6.存档数据/5.磁贴.md')">磁贴</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/6.开始菜单.md'}" @click="loadDoc('6.存档数据/6.开始菜单.md')">开始菜单</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/7.窗体数据.md'}" @click="loadDoc('6.存档数据/7.窗体数据.md')">窗体数据</div>
+-                
++
+                 <div class="sidebar-group-title">高级特性</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/1.全局API.md'}" @click="loadDoc('7.高级/1.全局API.md')">全局API</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/2.APP 高级特性.md'}" @click="loadDoc('7.高级/2.APP 高级特性.md')">APP高级特性</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/3.窗体API.md'}" @click="loadDoc('7.高级/3.窗体API.md')">窗体API</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/4.窗体通信.md'}" @click="loadDoc('7.高级/4.窗体通信.md')">窗体通信</div>
+             </div>
+-            <div class="content" v-html="renderedContent">
++            <div class="content">
+                 <div class="loading" v-if="loading">
+                     <i class="fa fa-spinner"></i>
++                    <span>正在加载文档…</span>
+                 </div>
++                <div v-else v-html="renderedContent"></div>
+             </div>
+         </div>
+     </div>
+-    
++
+     <script src="./index.js"></script>
+ </body>
+-</html>
+\ No newline at end of file
++</html>
+diff --git a/res/apps/yl-documents/index.js b/res/apps/yl-documents/index.js
+index fb468dc..c391055 100644
+--- a/res/apps/yl-documents/index.js
++++ b/res/apps/yl-documents/index.js
+@@ -1,11 +1,13 @@
+ YLApp.onReady(function() {
++    var defaultDoc = '1.前言.md';
+     var vue = new Vue({
+         el: '#app',
+         data: {
+-            currentDoc: '1.前言.md',
++            currentDoc: defaultDoc,
+             content: '',
+             loading: true,
+-            docsBasePath: null
++            docsBasePath: '',
++            currentDocUrl: ''
+         },
+         computed: {
+             renderedContent: function() {
+@@ -13,61 +15,101 @@ YLApp.onReady(function() {
+             }
+         },
+         created: function() {
+-            this.resolveDocsPath();
++            this.docsBasePath = this.detectDocsBasePath();
++            this.loadDoc(defaultDoc);
+         },
+         methods: {
+-            resolveDocsPath: function() {
+-                var appPath = './';
+-                var parentPath = '../../../';
+-                this.docsBasePath = parentPath + 'documents/';
+-                this.loadDoc('1.前言.md');
++            detectDocsBasePath: function() {
++                var pathname = window.location.pathname || '';
++                if (/\/documents\/?$/.test(pathname)) {
++                    return './';
++                }
++                return '../../../documents/';
++            },
++            normalizePath: function(path) {
++                var parts = path.split('/');
++                var normalized = [];
++                for (var i = 0; i < parts.length; i++) {
++                    var part = parts[i];
++                    if (!part || part === '.') {
++                        continue;
++                    }
++                    if (part === '..') {
++                        normalized.length && normalized.pop();
++                        continue;
++                    }
++                    normalized.push(part);
++                }
++                return normalized.join('/');
++            },
++            escapeHtml: function(text) {
++                return String(text)
++                    .replace(/&/g, '&amp;')
++                    .replace(/</g, '&lt;')
++                    .replace(/>/g, '&gt;')
++                    .replace(/"/g, '&quot;')
++                    .replace(/'/g, '&#39;');
++            },
++            getDocDirectory: function(docPath) {
++                var index = docPath.lastIndexOf('/');
++                return index > -1 ? docPath.slice(0, index + 1) : '';
++            },
++            resolveDocUrl: function(docPath) {
++                return this.docsBasePath + this.normalizePath(docPath);
++            },
++            resolveRelativeUrl: function(rawUrl) {
++                if (!rawUrl || /^(https?:)?\/\//.test(rawUrl) || /^(data|mailto|javascript):/i.test(rawUrl) || rawUrl.charAt(0) === '#') {
++                    return rawUrl;
++                }
++                return this.resolveDocUrl(this.getDocDirectory(this.currentDoc) + rawUrl);
++            },
++            buildDocLink: function(rawUrl) {
++                var docPath = this.normalizePath(this.getDocDirectory(this.currentDoc) + rawUrl).replace(/#.*$/, '').replace(/\?.*$/, '');
++                return '<a href="#" onclick="window.vue && window.vue.loadDoc(\'' + this.escapeHtml(docPath).replace(/&#39;/g, '\\&#39;') + '\'); return false;">' + this.escapeHtml(rawUrl) + '</a>';
+             },
+             loadDoc: function(docPath) {
+                 var self = this;
+                 this.loading = true;
+-                this.currentDoc = docPath;
+-                
+-                var url = this.docsBasePath + docPath;
+-                
+-                YL.util.loadContentFromUrl(url, 'GET', function(err, text) {
++                this.currentDoc = this.normalizePath(docPath);
++                this.currentDocUrl = this.resolveDocUrl(this.currentDoc);
++
++                YL.util.loadContentFromUrl(this.currentDocUrl, 'GET', function(err, text) {
+                     self.loading = false;
+                     if (!err) {
+                         self.content = text;
+                     } else {
+-                        self.content = '# 文档加载失败\n\n无法加载文档：' + docPath + '\n\n路径：' + url + '\n\n请检查文档文件是否存在。';
++                        self.content = '# 文档加载失败\n\n无法加载文档：' + self.currentDoc + '\n\n路径：' + self.currentDocUrl + '\n\n请检查文档文件是否存在。';
+                     }
+                 }, false);
+             },
+-            
+             markdownToHtml: function(md) {
+                 if (!md) return '';
+-                
+-                var html = md;
+-                
+-                // 转换标题
++
++                var self = this;
++                var html = md.replace(/\r\n/g, '\n');
++                var codeBlocks = [];
++
++                html = html.replace(/```([\s\S]*?)```/g, function(match, code) {
++                    var token = '__CODE_BLOCK_' + codeBlocks.length + '__';
++                    codeBlocks.push('<pre><code>' + self.escapeHtml(code.trim()) + '</code></pre>');
++                    return token;
++                });
++
+                 html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+                 html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+                 html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+-                
+-                // 转换代码块 (```)
+-                html = html.replace(/```([\s\S]*?)```/g, function(match, code) {
+-                    return '<pre><code>' + code.trim() + '</code></pre>';
++                html = html.replace(/`([^`]+)`/g, function(match, code) {
++                    return '<code>' + self.escapeHtml(code) + '</code>';
+                 });
+-                
+-                // 转换行内代码 (`code`)
+-                html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+-                
+-                // 转换列表
+-                html = html.replace(/^- (.*$)/gm, '<li>$1</li>');
+-                
+-                // 处理列表容器
++                html = html.replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>');
++                html = html.replace(/^\- (.*$)/gm, '<li>$1</li>');
++
+                 var lines = html.split('\n');
+-                var inList = false;
+                 var result = [];
+-                
++                var inList = false;
+                 for (var i = 0; i < lines.length; i++) {
+                     var line = lines[i];
+-                    if (line.startsWith('<li>')) {
++                    if (line.indexOf('<li>') === 0) {
+                         if (!inList) {
+                             result.push('<ul>');
+                             inList = true;
+@@ -84,31 +126,32 @@ YLApp.onReady(function() {
+                 if (inList) {
+                     result.push('</ul>');
+                 }
+-                
+                 html = result.join('\n');
+-                
+-                // 转换引用块
+-                html = html.replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>');
+-                
+-                // 转换段落
+-                html = html.replace(/^(?!<[hulbpr])(.*)$/gm, function(match, p1) {
+-                    if (p1.trim() === '') return '';
+-                    return '<p>' + p1 + '</p>';
++
++                html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, function(match, alt, url) {
++                    return '<img src="' + self.escapeHtml(self.resolveRelativeUrl(url)) + '" alt="' + self.escapeHtml(alt) + '">';
+                 });
+-                
+-                // 转换链接 [text](url)
+-                html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+-                
+-                // 转换粗体 **text**
++
++                html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, function(match, text, url) {
++                    if (/\.md($|[?#])/.test(url)) {
++                        var docPath = self.normalizePath(self.getDocDirectory(self.currentDoc) + url).replace(/#.*$/, '').replace(/\?.*$/, '');
++                        return '<a href="#" onclick="window.vue && window.vue.loadDoc(\'' + docPath.replace(/'/g, '\\&#39;') + '\'); return false;">' + self.escapeHtml(text) + '</a>';
++                    }
++                    return '<a href="' + self.escapeHtml(self.resolveRelativeUrl(url)) + '" target="_blank">' + self.escapeHtml(text) + '</a>';
++                });
++
+                 html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+-                
+-                // 转换斜体 *text*
+                 html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+-                
++                html = html.replace(/^(?!\s*$|<h\d|<ul>|<\/ul>|<li>|<blockquote>|<pre>|__CODE_BLOCK_)(.+)$/gm, '<p>$1</p>');
++
++                html = html.replace(/__CODE_BLOCK_(\d+)__/g, function(match, index) {
++                    return codeBlocks[parseInt(index, 10)] || '';
++                });
++
+                 return html;
+             }
+         }
+     });
+-    
++
+     window.vue = vue;
+-});
+\ No newline at end of file
++});
+diff --git a/res/yl.app.js b/res/yl.app.js
+index c12dd76..d44d141 100644
+--- a/res/yl.app.js
++++ b/res/yl.app.js
+@@ -54,11 +54,6 @@ window.YLApp = {
+       handler(msg);
+     });
+   },
+-  /**
+-   * @param event string 事件名
+-   * @param data 数据
+-   * @param target 发送目标，可以是单个id，id数组，或者true（发送给所有窗口）
+-   * */
+   emit: function (event, data, target) {
+     var session = this._idCounter++;
+     parent.postMessage({
+@@ -131,6 +126,452 @@ window.YLApp = {
+   },
+ };
+ 
++YLApp.framework = {
++  _initialized: false,
++  _winData: null,
++  _listeners: {},
++  _requestHandlers: {},
++  _pendingRequests: {},
++  init: function () {
++    if (this._initialized) {
++      return;
++    }
++    this._initialized = true;
++    var that = this;
++    YLApp.onEvent(function (msg) {
++      that._handleEvent(msg);
++    });
++  },
++  syncContext: function () {
++    var that = this;
++    this.init();
++    if (!YLApp.id) {
++      return;
++    }
++    YLApp.eval('getWinData', {}, function (winData) {
++      that._winData = winData || {};
++    });
++  },
++  _getAppId: function () {
++    return this._winData && this._winData.app ? this._winData.app : null;
++  },
++  _normalizeObject: function (value) {
++    if (value === null || typeof value === 'undefined') {
++      return null;
++    }
++    if (typeof value === 'function') {
++      return undefined;
++    }
++    if (Object.prototype.toString.call(value) === '[object Date]') {
++      return value.toISOString();
++    }
++    if (Array.isArray(value)) {
++      var arr = [];
++      for (var i = 0; i < value.length; i++) {
++        var normalizedItem = this._normalizeObject(value[i]);
++        if (typeof normalizedItem !== 'undefined') {
++          arr.push(normalizedItem);
++        }
++      }
++      return arr;
++    }
++    if (typeof value === 'object') {
++      var rel = {};
++      for (var key in value) {
++        if (!Object.prototype.hasOwnProperty.call(value, key) || key === '__ob__') {
++          continue;
++        }
++        var normalizedValue = this._normalizeObject(value[key]);
++        if (typeof normalizedValue !== 'undefined') {
++          rel[key] = normalizedValue;
++        }
++      }
++      return rel;
++    }
++    return value;
++  },
++  serialize: function (data, format) {
++    this.init();
++    var normalized = this._normalizeObject(data);
++    format = format || 'json';
++    if (format === 'xml') {
++      return this._toXML(normalized, 'payload');
++    }
++    return JSON.stringify(normalized);
++  },
++  deserialize: function (str, format) {
++    this.init();
++    format = format || 'json';
++    if (format === 'xml') {
++      return this._fromXML(str);
++    }
++    return JSON.parse(str);
++  },
++  _toXML: function (obj, rootName) {
++    rootName = rootName || 'root';
++    var xml = '<?xml version="1.0" encoding="UTF-8"?><' + rootName + '>';
++    if (obj === null || typeof obj === 'undefined') {
++      return xml + '</' + rootName + '>';
++    }
++    if (Array.isArray(obj)) {
++      for (var i = 0; i < obj.length; i++) {
++        xml += this._toXML(obj[i], 'item');
++      }
++      return xml + '</' + rootName + '>';
++    }
++    if (typeof obj === 'object') {
++      for (var key in obj) {
++        if (Object.prototype.hasOwnProperty.call(obj, key)) {
++          xml += this._toXML(obj[key], key.replace(/[^a-zA-Z0-9_]/g, '_'));
++        }
++      }
++      return xml + '</' + rootName + '>';
++    }
++    return xml + String(obj)
++      .replace(/&/g, '&amp;')
++      .replace(/</g, '&lt;')
++      .replace(/>/g, '&gt;')
++      .replace(/"/g, '&quot;')
++      .replace(/'/g, '&apos;') + '</' + rootName + '>';
++  },
++  _fromXML: function (xmlStr) {
++    var parser = new DOMParser();
++    var xmlDoc = parser.parseFromString(xmlStr, 'text/xml');
++    var parseNode = function (node) {
++      var elementChildren = [];
++      for (var i = 0; i < node.childNodes.length; i++) {
++        if (node.childNodes[i].nodeType === 1) {
++          elementChildren.push(node.childNodes[i]);
++        }
++      }
++      if (elementChildren.length === 0) {
++        return node.textContent;
++      }
++      var rel = {};
++      elementChildren.forEach(function (child) {
++        var value = parseNode(child);
++        if (typeof rel[child.nodeName] === 'undefined') {
++          rel[child.nodeName] = value;
++        } else if (Array.isArray(rel[child.nodeName])) {
++          rel[child.nodeName].push(value);
++        } else {
++          rel[child.nodeName] = [rel[child.nodeName], value];
++        }
++      });
++      return rel;
++    };
++    return parseNode(xmlDoc.documentElement);
++  },
++  on: function (eventName, handler) {
++    this.init();
++    if (!this._listeners[eventName]) {
++      this._listeners[eventName] = [];
++    }
++    this._listeners[eventName].push(handler);
++  },
++  off: function (eventName, handler) {
++    if (!this._listeners[eventName]) {
++      return;
++    }
++    var handlers = this._listeners[eventName];
++    var index = handlers.indexOf(handler);
++    if (index > -1) {
++      handlers.splice(index, 1);
++    }
++  },
++  handle: function (action, handler) {
++    this.init();
++    this._requestHandlers[action] = handler;
++  },
++  send: function (targetAppId, eventName, payload) {
++    this.init();
++    YLApp.emit('framework:event', {
++      name: eventName,
++      payload: this._normalizeObject(payload),
++      targetAppId: targetAppId || null,
++      sourceAppId: this._getAppId(),
++      sourceWindowId: YLApp.id,
++      createdAt: Date.now()
++    }, true);
++  },
++  broadcast: function (eventName, payload) {
++    this.init();
++    YLApp.emit('framework:event', {
++      name: eventName,
++      payload: this._normalizeObject(payload),
++      sourceAppId: this._getAppId(),
++      sourceWindowId: YLApp.id,
++      createdAt: Date.now()
++    }, true);
++  },
++  request: function (targetAppId, action, payload, callback) {
++    this.init();
++    var requestId = 'framework-' + Date.now() + '-' + (++YLApp._idCounter);
++    var that = this;
++    this._pendingRequests[requestId] = {
++      callback: callback,
++      timer: setTimeout(function () {
++        if (that._pendingRequests[requestId]) {
++          var cb = that._pendingRequests[requestId].callback;
++          delete that._pendingRequests[requestId];
++          cb && cb('Request timeout', null);
++        }
++      }, 30000)
++    };
++    YLApp.emit('framework:request', {
++      requestId: requestId,
++      action: action,
++      payload: this._normalizeObject(payload),
++      targetAppId: targetAppId || null,
++      sourceAppId: this._getAppId(),
++      sourceWindowId: YLApp.id,
++      createdAt: Date.now()
++    }, true);
++  },
++  createStore: function (options) {
++    this.init();
++    options = options || {};
++    var that = this;
++    var state = this._normalizeObject(options.state || {});
++    if (typeof Vue !== 'undefined' && typeof Vue.observable === 'function') {
++      state = Vue.observable(state);
++    }
++    var applyState = function (nextState) {
++      nextState = that._normalizeObject(nextState || {});
++      for (var key in state) {
++        if (Object.prototype.hasOwnProperty.call(state, key) && !Object.prototype.hasOwnProperty.call(nextState, key)) {
++          if (typeof Vue !== 'undefined' && typeof Vue.delete === 'function') {
++            Vue.delete(state, key);
++          } else {
++            delete state[key];
++          }
++        }
++      }
++      for (var nextKey in nextState) {
++        if (typeof Vue !== 'undefined' && typeof Vue.set === 'function') {
++          Vue.set(state, nextKey, nextState[nextKey]);
++        } else {
++          state[nextKey] = nextState[nextKey];
++        }
++      }
++      return state;
++    };
++    var namespace = options.namespace || function () {
++      return that._getAppId() || YLApp.id;
++    };
++    return {
++      state: state,
++      replace: function (nextState) {
++        return applyState(nextState);
++      },
++      serialize: function (format) {
++        return that.serialize(state, format);
++      },
++      deserialize: function (serialized, format) {
++        var parsed = that.deserialize(serialized, format);
++        return applyState(parsed);
++      },
++      save: function (meta, callback) {
++        if (typeof meta === 'function') {
++          callback = meta;
++          meta = {};
++        }
++        that.storage.save({
++          namespace: typeof namespace === 'function' ? namespace() : namespace,
++          state: state,
++          meta: meta || {}
++        }, callback);
++      },
++      load: function (callback) {
++        that.storage.load({
++          namespace: typeof namespace === 'function' ? namespace() : namespace
++        }, function (err, data) {
++          if (!err && data && data.state) {
++            applyState(data.state);
++          }
++          callback && callback(err, state, data);
++        });
++      }
++    };
++  },
++  _matchTarget: function (payload) {
++    if (!payload) {
++      return false;
++    }
++    var currentAppId = this._getAppId();
++    if (!payload.targetAppId && !payload.targetWindowId) {
++      return true;
++    }
++    if (payload.targetWindowId && payload.targetWindowId === YLApp.id) {
++      return true;
++    }
++    if (payload.targetAppId && currentAppId && payload.targetAppId === currentAppId) {
++      return true;
++    }
++    return false;
++  },
++  _dispatch: function (eventName, payload, context) {
++    var handlers = this._listeners[eventName] || [];
++    handlers.forEach(function (handler) {
++      handler(payload, context);
++    });
++  },
++  _respond: function (targetWindowId, requestId, result, error) {
++    YLApp.emit('framework:response', {
++      requestId: requestId,
++      result: this._normalizeObject(result),
++      error: error || null,
++      targetWindowId: targetWindowId,
++      sourceAppId: this._getAppId(),
++      sourceWindowId: YLApp.id,
++      createdAt: Date.now()
++    }, targetWindowId);
++  },
++  _handleEvent: function (msg) {
++    this.init();
++    if (!msg || !msg.event) {
++      return;
++    }
++    var payload = msg.data || {};
++    var context = {
++      from: msg.from,
++      sameOrigin: msg.sameOrigin,
++      sourceAppId: payload.sourceAppId || null,
++      sourceWindowId: payload.sourceWindowId || msg.from || null,
++      createdAt: payload.createdAt || Date.now()
++    };
++    if (msg.event === 'framework:event') {
++      if (!this._matchTarget(payload)) {
++        return;
++      }
++      this._dispatch(payload.name, payload.payload, context);
++      return;
++    }
++    if (msg.event === 'framework:request') {
++      if (!this._matchTarget(payload)) {
++        return;
++      }
++      var handler = this._requestHandlers[payload.action];
++      if (!handler) {
++        this._respond(payload.sourceWindowId || msg.from, payload.requestId, null, 'Handler not found: ' + payload.action);
++        return;
++      }
++      try {
++        var result = handler(payload.payload, context);
++        this._respond(payload.sourceWindowId || msg.from, payload.requestId, result, null);
++      } catch (e) {
++        this._respond(payload.sourceWindowId || msg.from, payload.requestId, null, e.message || String(e));
++      }
++      return;
++    }
++    if (msg.event === 'framework:response') {
++      if (!this._matchTarget(payload)) {
++        return;
++      }
++      var pending = this._pendingRequests[payload.requestId];
++      if (!pending) {
++        return;
++      }
++      clearTimeout(pending.timer);
++      delete this._pendingRequests[payload.requestId];
++      pending.callback && pending.callback(payload.error, payload.result, context);
++    }
++  },
++  storage: {
++    _getRemoteConfig: function (callback) {
++      YLApp.eval('getConfigs', null, function (configs) {
++        var dataStorage = configs && configs.dataStorage || {};
++        var remote = dataStorage.remote || {};
++        callback({
++          method: remote.method || 'POST',
++          headers: remote.headers || { 'Content-Type': 'application/json' },
++          timeout: remote.timeout || 30000,
++          loadUrl: remote.loadUrl || '',
++          saveUrl: remote.saveUrl || ''
++        });
++      });
++    },
++    _request: function (url, body, callback) {
++      this._getRemoteConfig(function (config) {
++        if (!url) {
++          callback && callback('Missing remote url', null);
++          return;
++        }
++        var xhr = new XMLHttpRequest();
++        xhr.timeout = config.timeout;
++        xhr.onreadystatechange = function () {
++          if (xhr.readyState !== 4) {
++            return;
++          }
++          if (xhr.status >= 200 && xhr.status < 300) {
++            var response = null;
++            if (xhr.responseText) {
++              try {
++                response = JSON.parse(xhr.responseText);
++              } catch (e) {
++                response = xhr.responseText;
++              }
++            }
++            callback && callback(null, response);
++          } else {
++            callback && callback('Request failed: ' + xhr.status, null);
++          }
++        };
++        xhr.onerror = function () {
++          callback && callback('Network error', null);
++        };
++        xhr.ontimeout = function () {
++          callback && callback('Request timeout', null);
++        };
++        xhr.open(config.method, url);
++        for (var key in config.headers) {
++          xhr.setRequestHeader(key, config.headers[key]);
++        }
++        xhr.send(JSON.stringify(body || {}));
++      });
++    },
++    load: function (options, callback) {
++      options = options || {};
++      var namespace = options.namespace || YLApp.framework._getAppId() || YLApp.id;
++      this._getRemoteConfig(function (config) {
++        YLApp.framework.storage._request(config.loadUrl, {
++          appId: YLApp.framework._getAppId() || YLApp.id,
++          namespace: namespace,
++          query: options.query || {}
++        }, callback);
++      });
++    },
++    save: function (options, callback) {
++      options = options || {};
++      var namespace = options.namespace || YLApp.framework._getAppId() || YLApp.id;
++      this._getRemoteConfig(function (config) {
++        YLApp.framework.storage._request(config.saveUrl, {
++          appId: YLApp.framework._getAppId() || YLApp.id,
++          namespace: namespace,
++          state: YLApp.framework._normalizeObject(options.state || {}),
++          meta: YLApp.framework._normalizeObject(options.meta || {})
++        }, callback);
++      });
++    }
++  }
++};
++
++YLApp.serialize = function (data, format) {
++  return YLApp.framework.serialize(data, format);
++};
++YLApp.deserialize = function (str, format) {
++  return YLApp.framework.deserialize(str, format);
++};
++YLApp.requestApp = function (targetAppId, action, payload, callback) {
++  return YLApp.framework.request(targetAppId, action, payload, callback);
++};
++YLApp.broadcastApp = function (eventName, payload) {
++  return YLApp.framework.broadcast(eventName, payload);
++};
++YLApp.createStore = function (options) {
++  return YLApp.framework.createStore(options);
++};
++
+ var ylOnMessage = function (message) {
+   var msg = message.data;
+   switch (msg.type) {
+@@ -151,6 +592,7 @@ var ylOnMessage = function (message) {
+             if (data.title === '') {
+               YLApp.eval('setWinData', { title: document.title });
+             }
++            YLApp.framework && YLApp.framework.syncContext();
+           });
+           var check = function (e) {
+             e = e || window.event;
+@@ -183,6 +625,7 @@ var ylOnMessage = function (message) {
+           YLApp.oldHref = url;
+           YLApp.eval('urlRel', url);
+         }
++        YLApp.framework && YLApp.framework.syncContext();
+       }
+       break;
+     case "ylui-eval":
+@@ -198,7 +641,6 @@ var ylOnMessage = function (message) {
+   }
+ };
+ 
+-
+ if (window.attachEvent) {
+   window.attachEvent('message', ylOnMessage)
+ } else {
