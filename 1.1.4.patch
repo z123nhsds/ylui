@@ -1,0 +1,11 @@
+diff --git a/res/js/yl-tile-sync.js b/res/js/yl-tile-sync.js
+index 39b52cf..235b852 100644
+--- a/res/js/yl-tile-sync.js
++++ b/res/js/yl-tile-sync.js
+@@ -150,4 +150,4 @@
+       }
+     }
+   };
+-})();
++})();
+\ No newline at end of file
