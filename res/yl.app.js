@@ -89,6 +89,21 @@ window.YLApp = {
   onEvent: function (cb) {
     this._cbEvent = cb;
   },
+  onTilesUpdate: function (cb) {
+    var oldCb = this._cbEvent;
+    this._cbEvent = function(msg) {
+      if (oldCb) oldCb(msg);
+      if (msg.event === 'tilesUpdated') {
+        cb(msg.data);
+      }
+    };
+  },
+  getTiles: function (cb) {
+    this.eval('getTilesData', {}, cb);
+  },
+  requestTilesSync: function () {
+    this.eval('requestTilesSync', {});
+  },
   onReady: function (cb) {
     if (this._cbReady === false) return; //只允许ready一次
     if (!cb) {
@@ -179,10 +194,6 @@ var ylOnMessage = function (message) {
       }
       break;
     case "ylui-event":
-      // 处理 tilesUpdated 事件
-      if (msg.event === "tilesUpdated" && YL.TileSync) {
-        YL.TileSync.applyTilesData(msg.data.tiles);
-      }
       YLApp._cbEvent(msg);
       break;
   }

@@ -984,6 +984,17 @@ window.YL = {
       var v = YL.vue;
       return v.configs;
     },
+    getTilesData: function (data, id) {
+      if (YL.TileSync) {
+        return YL.TileSync.loadFromStorage();
+      }
+      return null;
+    },
+    requestTilesSync: function (data, id) {
+      if (YL.TileSync) {
+        YL.TileSync.requestSync();
+      }
+    },
     getWinData: function (params, id) {
       var win = YL.vue.wins[id];
       return win ? Yuri2.jsonDeepCopy(win) : null;

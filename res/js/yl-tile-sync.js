@@ -149,11 +149,7 @@
      * 子 APP 调用：请求同步磁贴数据
      */
     requestSync: function() {
-      // 从 localStorage 加载并应用
-      const saved = this.loadFromStorage();
-      if (saved && saved.tiles) {
-        this.applyTilesData(saved.tiles);
-      }
+      this.broadcastTilesUpdate();
     },
 
     /**
@@ -192,39 +188,4 @@
     }
   };
 
-  // 确保在 YLApp 可用时扩展它
-  var extendYLApp = function() {
-    if (window.YLApp) {
-      /**
-       * 获取同步后的磁贴数据
-       */
-      window.YLApp.getTiles = function(callback) {
-        YL.TileSync.getLatestTiles(callback);
-      };
-
-      /**
-       * 监听磁贴更新
-       */
-      window.YLApp.onTilesUpdate = function(callback) {
-        YL.TileSync.onTilesUpdate(callback);
-      };
-
-      /**
-       * 请求同步
-       */
-      window.YLApp.requestTilesSync = function() {
-        YL.TileSync.requestSync();
-      };
-    }
-  };
-
-  // 立即尝试扩展
-  extendYLApp();
-  
-  // 如果 YLApp 还没加载，稍后再试
-  if (!window.YLApp) {
-    setTimeout(extendYLApp, 100);
-    setTimeout(extendYLApp, 500);
-    setTimeout(extendYLApp, 1000);
-  }
 })();
