@@ -44,12 +44,16 @@ window.YLApp = {
   _cbs: {},
   _cbReady: null,
   _created: false,
-  _cbEvent: function () {
-  },
+  _eventHandlers: [],
   id: "",
   secrete: '',
   data: null,
   oldHref: "",
+  _dispatchEvent: function (msg) {
+    this._eventHandlers.forEach(function (handler) {
+      handler(msg);
+    });
+  },
   /**
    * @param event string 事件名
    * @param data 数据
@@ -87,16 +91,16 @@ window.YLApp = {
     }]);
   },
   onEvent: function (cb) {
-    this._cbEvent = cb;
+    if (typeof cb !== 'function') return;
+    this._eventHandlers.push(cb);
   },
   onTilesUpdate: function (cb) {
-    var oldCb = this._cbEvent;
-    this._cbEvent = function(msg) {
-      if (oldCb) oldCb(msg);
+    if (typeof cb !== 'function') return;
+    this.onEvent(function (msg) {
       if (msg.event === 'tilesUpdated') {
         cb(msg.data);
       }
-    };
+    });
   },
   getTiles: function (cb) {
     this.eval('getTilesData', {}, cb);
@@ -105,7 +109,7 @@ window.YLApp = {
     this.eval('requestTilesSync', {});
   },
   onReady: function (cb) {
-    if (this._cbReady === false) return; //只允许ready一次
+    if (this._cbReady === false) return;
     if (!cb) {
       cb = function () {
       }
@@ -113,10 +117,9 @@ window.YLApp = {
     this._cbReady = cb;
   },
   hashBugForIeFix: function () {
-    document.body.focus(); //hash的bug，兼容IE
+    document.body.focus();
   },
   getWinObject: function (id) {
-    //获取同域的子窗体句柄
     try {
       var win = parent.YL.vue.wins[id];
       var idIframe = win.idIframe;
@@ -138,10 +141,10 @@ var ylOnMessage = function (message) {
           type: "ylui-pong",
         }, "*");
         if (YLApp._cbReady) {
-          var relCbReady = YLApp._cbReady(); //执行ready的回调
-          YLApp._cbReady = false;//清空ready
+          var relCbReady = YLApp._cbReady();
+          YLApp._cbReady = false;
           if (relCbReady !== false)
-            YLApp.emit('ready', null, true); //发送ready事件
+            YLApp.emit('ready', null, true);
         }
         if (!YLApp._created) {
           YLApp.eval('getWinData', {}, function (data) {
@@ -149,18 +152,15 @@ var ylOnMessage = function (message) {
               YLApp.eval('setWinData', { title: document.title });
             }
           });
-          //F5屏蔽大法
           var check = function (e) {
             e = e || window.event;
             if ((e.which || e.keyCode) === 116) {
               if (e.preventDefault) {
                 e.preventDefault();
-                // window.location.reload();
                 YLApp.eval('refresh', window.YLApp.id);
               } else {
                 event.keyCode = 0;
                 e.returnValue = false;
-                // window.location.reload();
                 YLApp.eval('refresh', window.YLApp.id);
               }
             }
@@ -178,7 +178,6 @@ var ylOnMessage = function (message) {
         YLApp.id = msg.id;
         YLApp.secrete = msg.secrete;
         YLApp.data = msg.data;
-        //实时更新url
         var url = location.href;
         if (YLApp.oldHref !== url) {
           YLApp.oldHref = url;
@@ -194,7 +193,7 @@ var ylOnMessage = function (message) {
       }
       break;
     case "ylui-event":
-      YLApp._cbEvent(msg);
+      YLApp._dispatchEvent(msg);
       break;
   }
 };
