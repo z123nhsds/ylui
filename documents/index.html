@@ -91,6 +91,9 @@
                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/2.APP 高级特性.md'}" @click="loadDoc('7.高级/2.APP 高级特性.md')">APP高级特性</div>
                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/3.窗体API.md'}" @click="loadDoc('7.高级/3.窗体API.md')">窗体API</div>
                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/4.窗体通信.md'}" @click="loadDoc('7.高级/4.窗体通信.md')">窗体通信</div>
+
+                <div class="sidebar-group-title">开发手册</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '8.应用开发.md'}" @click="loadDoc('8.应用开发.md')">应用开发指南</div>
             </div>
             <div class="content">
                 <div class="loading" v-if="loading">

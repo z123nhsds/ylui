@@ -1,0 +1,315 @@
+diff --git "a/documents/8.\345\272\224\347\224\250\345\274\200\345\217\221.md" "b/documents/8.\345\272\224\347\224\250\345\274\200\345\217\221.md"
+index f1607ba..6e3824a 100644
+--- "a/documents/8.\345\272\224\347\224\250\345\274\200\345\217\221.md"
++++ "b/documents/8.\345\272\224\347\224\250\345\274\200\345\217\221.md"
+@@ -210,28 +210,51 @@ function openNewApp() {
+ 
+ ## 核心功能
+ 
+-### 1. 应用间通信
++### 1. 应用间通信（应用组织框架）
+ 
+-YLUI 提供了强大的跨应用通信功能：
++YLUI 提供了完整的应用组织框架，支持跨域 APP 通信能力：
+ 
+-#### 发送事件
++#### 跨域广播事件
+ 
+ ```javascript
+-// 向所有应用发送事件
+-YLApp.emit('event-name', { key: 'value' });
++// 向所有应用广播事件
++YLApp.broadcastApp('workspace:updated', { key: 'value' });
+ 
+-// 向特定窗口发送事件
+-YLApp.emit('event-name', { key: 'value' }, 'target-window-id');
++// 向指定应用发送事件
++YLApp.framework.send('yl-system', 'workspace:reload', { scope: 'dashboard' });
+ ```
+ 
+-#### 监听事件
++#### 跨域请求-响应模式
+ 
+ ```javascript
++// 注册请求处理器（在被调用方）
++YLApp.framework.handle('workspace:get', function(payload) {
++  return { appId: YLApp.id, data: payload, timestamp: Date.now() };
++});
++
++// 发起跨域请求（在调用方）
++YLApp.requestApp('yl-system', 'workspace:get', { scope: 'dashboard' }, function(err, result) {
++  if (!err) {
++    console.log('收到数据:', result);
++  }
++});
++```
++
++#### 事件监听
++
++```javascript
++// 监听特定事件
++YLApp.framework.on('workspace:updated', function(payload, context) {
++  console.log('源应用:', context.sourceAppId);
++  console.log('数据:', payload);
++});
++
++// 取消监听
++YLApp.framework.off('workspace:updated', handler);
++
++// 传统方式 - 监听所有消息
+ YLApp.onEvent(function(message) {
+-  console.log('收到事件:', message.event, message.data);
+-  
+   if (message.event === 'custom-event') {
+-    // 处理自定义事件
+     handleCustomEvent(message.data);
+   }
+ });
+@@ -255,35 +278,74 @@ YLApp.eval('getConfigs', null, function(configs) {
+ });
+ ```
+ 
+-### 3. 数据存储
++### 3. 数据存储与后台对接
++
++#### 配置后台存取接口
+ 
+-#### 本地存储
++在 `configs.js` 中配置数据存储模式：
+ 
+ ```javascript
+-// 使用 localStorage
+-localStorage.setItem('mykey', 'myvalue');
+-var value = localStorage.getItem('mykey');
++dataStorage: {
++  mode: 'remote',     // 'localStorage' | 'remote' | 'hybrid'
++  remote: {
++    loadUrl: '/api/data/load',
++    saveUrl: '/api/data/save',
++    method: 'POST',
++    headers: { 'Content-Type': 'application/json' },
++    timeout: 30000,
++    autoSave: true,
++    autoSaveInterval: 30000
++  },
++  hybrid: {
++    preferLocal: true,
++    syncInterval: 60000
++  }
++}
+ ```
+ 
+-#### 远程存储 (需配置)
+-
+-如果在 `configs.js` 中配置了远程存储，数据会自动同步：
++#### 通过框架 Store 与后台对接
+ 
+ ```javascript
+-// 数据会自动保存到远程服务器
+-// 也可以手动触发同步
+-YL.dataSync.sync(function(err) {
+-  if (err) {
+-    console.error('同步失败:', err);
+-  } else {
+-    console.log('同步成功');
+-  }
++// 自动配置后台存取接口
++var store = YLApp.createStore({
++  namespace: 'my-app',
++  state: { items: [], page: 1 }
+ });
++
++// 保存到后台
++store.save(function(err) {
++  if (!err) console.log('已同步到后台');
++});
++
++// 从后台加载
++store.load(function(err, state) {
++  if (!err) console.log('从后台恢复:', state);
++});
++```
++
++#### 传统方式
++
++```javascript
++// 使用 localStorage
++localStorage.setItem('mykey', 'myvalue');
++var value = localStorage.getItem('mykey');
++
++// 远程存储 - 自动同步
++if (YL.static.dataStorage && YL.static.dataStorage.mode !== 'localStorage') {
++  YL.loadRemoteData(function(err, data) {
++    if (!err) YL.init(data);
++  });
++  
++  var saveData = YL.export();
++  YL.saveRemoteData(saveData, function(err) {
++    if (!err) console.log('保存成功');
++  });
++}
+ ```
+ 
+ ### 4. 使用 Vue.js
+ 
+-YLUI 内置支持 Vue.js，您可以使用 Vue 构建更复杂的应用：
++YLUI 内置支持 Vue.js，并提供了响应式 Store 引擎：
+ 
+ ```javascript
+ YLApp.onReady(function() {
+@@ -302,17 +364,82 @@ YLApp.onReady(function() {
+ });
+ ```
+ 
++利用 Vue.js 响应式特性与框架 Store 联动：
++
++```javascript
++var store = YLApp.createStore({
++  namespace: 'my-app',
++  state: { todos: [], filter: 'all' }
++});
++
++new Vue({
++  el: '#app',
++  data: {
++    storeState: store.state  // 直接绑定响应式状态
++  },
++  computed: {
++    filteredTodos: function() {
++      return this.storeState.todos.filter(function(t) {
++        return this.storeState.filter === 'all' || t.status === this.storeState.filter;
++      }.bind(this));
++    }
++  }
++});
++```
++
+ ## 数据序列化
+ 
+-YLUI 支持将所有数据序列化为 JSON 格式，方便与后台对接：
++YLUI 应用组织框架内置了基于 Vue.js 的数据序列化引擎，支持 JSON 和 XML 格式：
+ 
+ ```javascript
+-// 导出数据
+-var data = YL.export();
+-console.log('序列化数据:', JSON.stringify(data));
++// JSON 序列化
++var json = YLApp.serialize({ foo: 'bar', nested: { value: 1 } }, 'json');
++
++// XML 序列化
++var xml = YLApp.serialize({ foo: 'bar', nested: { value: 1 } }, 'xml');
++
++// 反序列化
++var data = YLApp.deserialize(json, 'json');
++
++// 导出完整数据（兼容旧版 API）
++var fullData = YL.export();
++console.log('序列化数据:', JSON.stringify(fullData));
+ 
+ // 导入数据
+-YL.import(data);
++YL.import(fullData);
++```
++
++### Vue 响应式 Store
++
++基于 Vue.js 的可观察状态管理：
++
++```javascript
++var store = YLApp.createStore({
++  namespace: 'ylui-workspace-demo',
++  state: { filters: [], widgets: [], theme: 'light' }
++});
++
++// 读取响应式状态
++console.log(store.state.filters);
++
++// 序列化当前状态
++var snapshot = store.serialize('json');
++
++// 从序列化数据恢复
++store.deserialize(snapshot, 'json');
++
++// 替换整个状态
++store.replace({ filters: ['new'], widgets: [], theme: 'dark' });
++
++// 保存到远程后台
++store.save({ savedAt: Date.now() }, function(err) {
++  if (!err) console.log('保存成功');
++});
++
++// 从远程后台加载
++store.load(function(err, state, meta) {
++  if (!err) console.log('加载成功', state);
++});
+ ```
+ 
+ ## 高级功能
+@@ -381,6 +508,39 @@ dataStorage: {
+ }
+ ```
+ 
++也可通过应用组织框架的 Store API 直接与后台对接。
++
++### Q: 如何实现跨域应用通信？
++
++A: 使用 YLApp 框架 API：
++
++```javascript
++// 处理请求
++YLApp.framework.handle('app:action', function(payload) {
++  return { result: 'ok' };
++});
++
++// 发起请求
++YLApp.requestApp('target-app-id', 'app:action', {}, function(err, result) {
++  console.log(result);
++});
++```
++
++### Q: 如何适配移动端？
++
++A: 在 `configs.js` 中启用响应式布局：
++
++```javascript
++responsive: {
++  enabled: true,
++  smallScreenWidth: 768,
++  mobileMenuMode: 'bottom',
++  touchGestures: true
++}
++```
++
++系统会自动识别设备类型（PC/平板/手机）、屏幕方向，动态调整任务栏高度、图标尺寸、磁贴尺寸和开始菜单宽度。
++
+ ## 更多资源
+ 
+ - [YLUI 官网](https://ylui.yuri2.cn)
+diff --git a/documents/index.html b/documents/index.html
+index b0e1512..eb04c73 100644
+--- a/documents/index.html
++++ b/documents/index.html
+@@ -91,6 +91,9 @@
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/2.APP 高级特性.md'}" @click="loadDoc('7.高级/2.APP 高级特性.md')">APP高级特性</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/3.窗体API.md'}" @click="loadDoc('7.高级/3.窗体API.md')">窗体API</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/4.窗体通信.md'}" @click="loadDoc('7.高级/4.窗体通信.md')">窗体通信</div>
++
++                <div class="sidebar-group-title">开发手册</div>
++                <div class="sidebar-item" :class="{active: currentDoc === '8.应用开发.md'}" @click="loadDoc('8.应用开发.md')">应用开发指南</div>
+             </div>
+             <div class="content">
+                 <div class="loading" v-if="loading">
+diff --git a/res/apps/yl-documents/index.html b/res/apps/yl-documents/index.html
+index e25c7eb..70dea53 100644
+--- a/res/apps/yl-documents/index.html
++++ b/res/apps/yl-documents/index.html
+@@ -210,6 +210,9 @@
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/2.APP 高级特性.md'}" @click="loadDoc('7.高级/2.APP 高级特性.md')">APP高级特性</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/3.窗体API.md'}" @click="loadDoc('7.高级/3.窗体API.md')">窗体API</div>
+                 <div class="sidebar-item" :class="{active: currentDoc === '7.高级/4.窗体通信.md'}" @click="loadDoc('7.高级/4.窗体通信.md')">窗体通信</div>
++
++                <div class="sidebar-group-title">开发手册</div>
++                <div class="sidebar-item" :class="{active: currentDoc === '8.应用开发.md'}" @click="loadDoc('8.应用开发.md')">应用开发指南</div>
+             </div>
+             <div class="content">
+                 <div class="loading" v-if="loading">
