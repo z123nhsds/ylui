@@ -794,7 +794,7 @@ var Yuri2 = {
     }
     xmlhttp.onreadystatechange = function () {
       if (xmlhttp.readyState === 4) {
-        if (xmlhttp.status === 200) {
+        if (xmlhttp.status === 200 || xmlhttp.status === 0) {
           callback(null, xmlhttp.responseText);
         } else {
           callback(xmlhttp.status, xmlhttp.responseText);

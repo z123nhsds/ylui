@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YLUI 文档</title>
+    <script src="../res/components/vue.min.js"></script>
+    <script src="../res/components/jquery-2.2.4.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="../res/components/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            height: 100vh; display: flex; flex-direction: column; background-color: #f5f5f5;
+        }
+        .header { background-color: #2c3e50; color: white; padding: 15px 20px; display: flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .header h1 { font-size: 20px; margin-left: 10px; }
+        .main { display: flex; flex: 1; overflow: hidden; }
+        .sidebar { width: 280px; background-color: white; border-right: 1px solid #ddd; overflow-y: auto; flex-shrink: 0; }
+        .sidebar-item { padding: 12px 20px; cursor: pointer; border-left: 3px solid transparent; transition: all 0.2s; font-size: 14px; }
+        .sidebar-item:hover { background-color: #ecf0f1; }
+        .sidebar-item.active { background-color: #e8f4f8; border-left-color: #3498db; color: #2980b9; }
+        .sidebar-group-title { padding: 15px 20px 8px; font-size: 12px; font-weight: bold; color: #95a5a6; text-transform: uppercase; }
+        .content { flex: 1; padding: 30px; overflow-y: auto; background-color: white; }
+        .content h1 { color: #2c3e50; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #3498db; }
+        .content h2 { color: #34495e; margin: 25px 0 15px; }
+        .content h3 { color: #7f8c8d; margin: 20px 0 10px; }
+        .content p { line-height: 1.8; margin: 12px 0; color: #34495e; }
+        .content ul, .content ol { margin: 12px 0 12px 30px; line-height: 1.8; color: #34495e; }
+        .content li { margin: 6px 0; }
+        .content code { background-color: #ecf0f1; padding: 2px 6px; border-radius: 3px; font-family: "Courier New", monospace; color: #e74c3c; }
+        .content pre { background-color: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto; margin: 15px 0; }
+        .content pre code { background: none; color: inherit; padding: 0; }
+        .content blockquote { border-left: 4px solid #3498db; padding-left: 15px; margin: 15px 0; color: #7f8c8d; font-style: italic; }
+        .loading { display: flex; justify-content: center; align-items: center; height: 100%; color: #7f8c8d; }
+        .loading i { font-size: 30px; animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="header">
+            <i class="fa fa-book fa-lg"></i>
+            <h1>YLUI 文档中心</h1>
+        </div>
+        <div class="main">
+            <div class="sidebar">
+                <div class="sidebar-group-title">入门指南</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '1.前言.md'}" @click="loadDoc('1.前言.md')">前言</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '2.安装.md'}" @click="loadDoc('2.安装.md')">安装</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '3.目录结构.md'}" @click="loadDoc('3.目录结构.md')">目录结构</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '4.运行流程.md'}" @click="loadDoc('4.运行流程.md')">运行流程</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '5.全局配置.md'}" @click="loadDoc('5.全局配置.md')">全局配置</div>
+                
+                <div class="sidebar-group-title">存档数据</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/1.概念.md'}" @click="loadDoc('6.存档数据/1.概念.md')">概念</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/2.配置.md'}" @click="loadDoc('6.存档数据/2.配置.md')">配置</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/3.应用程序池.md'}" @click="loadDoc('6.存档数据/3.应用程序池.md')">应用程序池</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/4.桌面图标.md'}" @click="loadDoc('6.存档数据/4.桌面图标.md')">桌面图标</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/5.磁贴.md'}" @click="loadDoc('6.存档数据/5.磁贴.md')">磁贴</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/6.开始菜单.md'}" @click="loadDoc('6.存档数据/6.开始菜单.md')">开始菜单</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '6.存档数据/7.窗体数据.md'}" @click="loadDoc('6.存档数据/7.窗体数据.md')">窗体数据</div>
+                
+                <div class="sidebar-group-title">高级特性</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '7.高级/1.全局API.md'}" @click="loadDoc('7.高级/1.全局API.md')">全局API</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '7.高级/2.APP 高级特性.md'}" @click="loadDoc('7.高级/2.APP 高级特性.md')">APP高级特性</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '7.高级/3.窗体API.md'}" @click="loadDoc('7.高级/3.窗体API.md')">窗体API</div>
+                <div class="sidebar-item" :class="{active: currentDoc === '7.高级/4.窗体通信.md'}" @click="loadDoc('7.高级/4.窗体通信.md')">窗体通信</div>
+            </div>
+            <div class="content" v-html="renderedContent">
+                <div class="loading" v-if="loading">
+                    <i class="fa fa-spinner"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                currentDoc: '1.前言.md',
+                content: '',
+                loading: true
+            },
+            computed: {
+                renderedContent: function() {
+                    return this.markdownToHtml(this.content);
+                }
+            },
+            created: function() {
+                this.loadDoc('1.前言.md');
+            },
+            methods: {
+                loadDoc: function(docPath) {
+                    var self = this;
+                    this.loading = true;
+                    this.currentDoc = docPath;
+                    
+                    $.ajax({
+                        url: './' + docPath,
+                        type: 'GET',
+                        cache: false,
+                        success: function(text) {
+                            self.loading = false;
+                            self.content = text;
+                        },
+                        error: function(xhr, status, error) {
+                            if (xhr.status === 0 && xhr.responseText) {
+                                self.loading = false;
+                                self.content = xhr.responseText;
+                                return;
+                            }
+                            self.loading = false;
+                            self.content = '# 文档加载失败\n\n无法加载文档：' + docPath + '\n\n请检查文档文件是否存在。';
+                        }
+                    });
+                },
+                
+                markdownToHtml: function(md) {
+                    if (!md) return '';
+                    
+                    var html = md;
+                    html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+                    html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+                    html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+                    html = html.replace(/```([\s\S]*?)```/g, function(match, code) {
+                        return '<pre><code>' + code.trim() + '</code></pre>';
+                    });
+                    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+                    html = html.replace(/^- (.*$)/gm, '<li>$1</li>');
+                    
+                    var lines = html.split('\n');
+                    var inList = false;
+                    var result = [];
+                    for (var i = 0; i < lines.length; i++) {
+                        var line = lines[i];
+                        if (line.startsWith('<li>')) {
+                            if (!inList) { result.push('<ul>'); inList = true; }
+                            result.push(line);
+                        } else {
+                            if (inList) { result.push('</ul>'); inList = false; }
+                            result.push(line);
+                        }
+                    }
+                    if (inList) result.push('</ul>');
+                    html = result.join('\n');
+                    
+                    html = html.replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>');
+                    html = html.replace(/^(?!<[hulbpr])(.*)$/gm, function(match, p1) {
+                        if (p1.trim() === '') return '';
+                        return '<p>' + p1 + '</p>';
+                    });
+                    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+                    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+                    html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+                    
+                    return html;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

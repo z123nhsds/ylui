@@ -1,10 +1,11 @@
 {
   "name": "ylui-desktop",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "YLUI 纯前端桌面框架 - WIN10 风格",
   "main": "index.html",
   "scripts": {
     "dev": "http-server -p 8080 -c-1",
+    "start": "http-server -p 8080 -c-1",
     "serve": "http-server -p 8080 -c-1"
   },
   "keywords": ["desktop", "vue", "win10"],

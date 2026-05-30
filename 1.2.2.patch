@@ -1,0 +1,536 @@
+diff --git a/1.2.1.patch b/1.2.1.patch
+index e69de29..d0899d8 100644
+--- a/1.2.1.patch
++++ b/1.2.1.patch
+@@ -0,0 +1,18 @@
++{
++  "name": "ylui-desktop",
++  "version": "1.2.0",
++  "description": "YLUI 纯前端桌面框架 - WIN10 风格",
++  "main": "index.html",
++  "scripts": {
++    "dev": "http-server -p 8080 -c-1",
++    "start": "http-server -p 8080 -c-1",
++    "serve": "http-server -p 8080 -c-1"
++  },
++  "keywords": ["desktop", "vue", "win10"],
++  "author": "YLUI Team",
++  "license": "MIT",
++  "devDependencies": {},
++  "dependencies": {
++    "http-server": "^14.1.1"
++  }
++}
+diff --git a/configs.js b/configs.js
+index fc57128..914a1c1 100644
+--- a/configs.js
++++ b/configs.js
+@@ -1,21 +1,21 @@
+ YL.static = {
+   /** “关于”信息 */
+-  softwareName: 'YLUI DEMO', //网站名。请在此处填写您自己的网站名，如王小明的博客。
+-  version: "1.0.0", // 网站版本号
+-  iconBtnStart: 'html5', //主图标
+-  author: 'null',//作者
+-  contactInformation: 'null',//联系方式
+-  officialWebsite: '//null',//软件官网
+-  welcome: '本网站UI由 YLUI 强力驱动\n更多信息：//ylui.yuri2.cn',//加载完毕控制台提示信息
+-  copyrightDetail: 'null',//版权详细信息
++  softwareName: 'YLUI DEMO', //网站名。请在此处填写您自己的网站名，如王小明的博客
++  version: "1.2.0", // 网站版本号
++  iconBtnStart: 'yoast', //主图标
++  author: 'YLUI Team',//作者
++  contactInformation: 'ylui@yuri2.cn',//联系方式
++  officialWebsite: 'https://ylui.yuri2.cn',//软件官网
++  welcome: '本网站UI由 YLUI 强力驱动\n更多信息：https://ylui.yuri2.cn',//加载完毕控制台提示信息
++  copyrightDetail: 'YLUI 桌面框架',//版权详细信息
+   otherStatements: '',//其他信息（可留空）
+ 
+   /**————————————————————————————————————————————————————————————————————————————————————————————*/
+   /** YLUI基础设置 */
+   lang: 'zh-cn', //语言
+   localStorageName: "ylui-storage", //ls存储名
+-  lockedApps: ['yl-system', 'yl-color-picker', 'ylui-fa', 'yl-browser'], // 锁定的应用（不允许被脚本修改）
+-  trustedApps: [], // 受信任的应用（可以使用敏感API）
++  lockedApps: ['yl-system', 'yl-color-picker', 'ylui-fa', 'yl-browser', 'ylui-documents'], // 锁定的应用（不允许被脚本修改）
++  trustedApps: ['yl-system'], // 受信任的应用（可以使用敏感API）
+   debug: false,//启用更多调试信息
+   beforeOnloadEnable: true,//启用关闭前询问（打包app时请关闭防止出错）
+   WarningPerformanceInIE: true,//在IE下提示体验不佳信息
+@@ -28,4 +28,84 @@ YL.static = {
+   authorization: '社区版',//授权类型
+   serialNumber: null,//序列号
+ 
++  /**————————————————————————————————————————————————————————————————————————————————————————————*/
++  /** 数据存储配置 - 与后台接口对接 */
++  dataStorage: {
++    // 数据加载方式: 'localStorage' | 'remote' | 'hybrid'
++    mode: 'localStorage',
++    
++    // 远程接口配置 (当 mode 为 'remote' 或 'hybrid' 时使用)
++    remote: {
++      // 数据加载接口
++      loadUrl: '/api/data/load',
++      // 数据保存接口
++      saveUrl: '/api/data/save',
++      // 请求方法
++      method: 'POST',
++      // 请求头
++      headers: {
++        'Content-Type': 'application/json'
++      },
++      // 请求超时时间(毫秒)
++      timeout: 30000,
++      // 是否启用自动保存
++      autoSave: false,
++      // 自动保存间隔(毫秒)
++      autoSaveInterval: 30000
++    },
++    
++    // 混合模式配置 (当 mode 为 'hybrid' 时使用)
++    hybrid: {
++      // 优先使用本地存储
++      preferLocal: true,
++      // 后台同步间隔(毫秒)
++      syncInterval: 60000
++    }
++  },
++
++  /**————————————————————————————————————————————————————————————————————————————————————————————*/
++  /** 应用组织框架配置 */
++  appFramework: {
++    // 是否启用跨域 APP 通信
++    enableCrossOriginCommunication: true,
++    // 是否启用数据序列化
++    enableDataSerialization: true,
++    // 数据序列化格式: 'json' | 'xml'
++    serializationFormat: 'json',
++    // 主题色
++    themeColors: [
++      '#FFB900',
++      '#FF8C00',
++      '#F7630C',
++      '#CA5010',
++      '#DA3B01',
++      '#EF6950',
++      '#D13438',
++      '#E74856',
++      '#E81123',
++      '#EA005E',
++      '#C30052',
++      '#E3008C',
++      '#BF0077',
++      '#C239B3',
++      '#9A0089',
++      '#0078D7',
++      '#0063B1',
++      '#8E8CD8',
++      '#6B69D6',
++      '#8764B8',
++      '#744DA9',
++      '#B146C2',
++      '#881798',
++      '#0099BC',
++      '#2D7D9A',
++      '#00B7C3',
++      '#038387',
++      '#00B294',
++      '#018574',
++      '#00CC6A',
++      '#10893E'
++    ]
++  }
++
+ };
+diff --git a/onLoad.js b/onLoad.js
+index 4f8c812..6619420 100644
+--- a/onLoad.js
++++ b/onLoad.js
+@@ -9,22 +9,56 @@ YL.onLoad(function () {
+   // 读取url中load参数，如localhost/ylui/index.html?load=basic
+   var load = Yuri2.parseURL().params.load;
+   var file;
+-  // 当load === 'ylui-storage'时，尝试加载浏览器缓存
+-  if (load === YL.static.localStorageName && localStorage.getItem(YL.static.localStorageName)) {
+-    YL.init();
+-    return;
+-  } else if (load === YL.static.localStorageName) {
+-    file = 'basic';
++  
++  // 先检查数据存储模式
++  var storageMode = YL.static.dataStorage && YL.static.dataStorage.mode || 'localStorage';
++  
++  if (storageMode === 'remote' || storageMode === 'hybrid') {
++    // 远程模式或混合模式：优先尝试从远程加载
++    YL.loadRemoteData(function(err, data) {
++      if (!err && data) {
++        // 远程加载成功
++        YL.init(data);
++        
++        // 混合模式下同时保存到本地
++        if (storageMode === 'hybrid' && YL.dataSync) {
++          YL.dataSync.saveToLocal(data);
++        }
++        
++        // 初始化数据存储系统
++        YL.initDataStorage && YL.initDataStorage();
++      } else {
++        // 远程加载失败，回退到本地模式
++        YL.debug('远程加载失败，使用本地数据');
++        loadLocalData();
++      }
++    });
++  } else {
++    // 本地存储模式
++    loadLocalData();
+   }
+-  // 从json文件读取
+-  file = file || load || 'basic';
+-  var save = /^\w+$/.test(file) ? './saves/' + file + '.json' : file;
+-  Yuri2.loadContentFromUrl(save, 'GET', function (err, text) {
+-    if (!err) {
+-      var data = JSON.parse(text);
+-      YL.init(data);
+-    } else {
+-      alert('YLUI读取配置错误，初始化失败');
++  
++  function loadLocalData() {
++    // 当load === 'ylui-storage'时，尝试加载浏览器缓存
++    if (load === YL.static.localStorageName && localStorage.getItem(YL.static.localStorageName)) {
++      YL.init();
++      YL.initDataStorage && YL.initDataStorage();
++      return;
++    } else if (load === YL.static.localStorageName) {
++      file = 'basic';
+     }
+-  });
++    
++    // 从json文件读取
++    file = file || load || 'basic';
++    var save = /^\w+$/.test(file) ? './saves/' + file + '.json' : file;
++    Yuri2.loadContentFromUrl(save, 'GET', function (err, text) {
++      if (!err) {
++        var data = JSON.parse(text);
++        YL.init(data);
++        YL.initDataStorage && YL.initDataStorage();
++      } else {
++        alert('YLUI读取配置错误，初始化失败');
++      }
++    });
++  }
+ });
+diff --git a/package.json b/package.json
+index 1fff2c6..d0899d8 100644
+--- a/package.json
++++ b/package.json
+@@ -1,10 +1,11 @@
+ {
+   "name": "ylui-desktop",
+-  "version": "1.0.0",
++  "version": "1.2.0",
+   "description": "YLUI 纯前端桌面框架 - WIN10 风格",
+   "main": "index.html",
+   "scripts": {
+     "dev": "http-server -p 8080 -c-1",
++    "start": "http-server -p 8080 -c-1",
+     "serve": "http-server -p 8080 -c-1"
+   },
+   "keywords": ["desktop", "vue", "win10"],
+diff --git a/res/js/Yuri2.js b/res/js/Yuri2.js
+index 5bfb74c..ad7cd0c 100644
+--- a/res/js/Yuri2.js
++++ b/res/js/Yuri2.js
+@@ -794,7 +794,7 @@ var Yuri2 = {
+     }
+     xmlhttp.onreadystatechange = function () {
+       if (xmlhttp.readyState === 4) {
+-        if (xmlhttp.status === 200) {
++        if (xmlhttp.status === 200 || xmlhttp.status === 0) {
+           callback(null, xmlhttp.responseText);
+         } else {
+           callback(xmlhttp.status, xmlhttp.responseText);
+diff --git a/res/js/yl-io.js b/res/js/yl-io.js
+index dd45736..066cd8b 100644
+--- a/res/js/yl-io.js
++++ b/res/js/yl-io.js
+@@ -38,10 +38,115 @@ YL.export = function () {
+     removeMenuAttrOpen(item);
+   }
+   rel.startMenu = startMenu;
++  rel.version = YL.info.version;
++  rel.timestamp = Date.now();
+   return rel;
+ };
+ 
+-//格式化数据为运行时可用
++// 远程数据加载
++YL.loadRemoteData = function(callback) {
++  if (!YL.static.dataStorage || YL.static.dataStorage.mode === 'localStorage') {
++    if (callback) callback(null, null);
++    return;
++  }
++  
++  var config = YL.static.dataStorage;
++  var remote = config.remote;
++  
++  YL.debug('正在从远程服务器加载数据...');
++  
++  var xhr = new XMLHttpRequest();
++  xhr.timeout = remote.timeout || 30000;
++  
++  xhr.onreadystatechange = function() {
++    if (xhr.readyState === 4) {
++      if (xhr.status === 200) {
++        try {
++          var data = JSON.parse(xhr.responseText);
++          YL.debug('远程数据加载成功');
++          if (callback) callback(null, data);
++        } catch (e) {
++          YL.debug('远程数据解析失败: ' + e);
++          if (callback) callback(e, null);
++        }
++      } else {
++        YL.debug('远程数据加载失败，状态码: ' + xhr.status);
++        if (callback) callback(new Error('Failed to load data'), null);
++      }
++    }
++  };
++  
++  xhr.onerror = function() {
++    YL.debug('网络请求失败');
++    if (callback) callback(new Error('Network error'), null);
++  };
++  
++  xhr.ontimeout = function() {
++    YL.debug('请求超时');
++    if (callback) callback(new Error('Request timeout'), null);
++  };
++  
++  xhr.open(remote.method || 'POST', remote.loadUrl);
++  
++  if (remote.headers) {
++    for (var key in remote.headers) {
++      xhr.setRequestHeader(key, remote.headers[key]);
++    }
++  }
++  
++  xhr.send();
++};
++
++// 远程数据保存
++YL.saveRemoteData = function(data, callback) {
++  if (!YL.static.dataStorage || YL.static.dataStorage.mode === 'localStorage') {
++    if (callback) callback(null);
++    return;
++  }
++  
++  var config = YL.static.dataStorage;
++  var remote = config.remote;
++  
++  YL.debug('正在保存数据到远程服务器...');
++  
++  var xhr = new XMLHttpRequest();
++  xhr.timeout = remote.timeout || 30000;
++  
++  xhr.onreadystatechange = function() {
++    if (xhr.readyState === 4) {
++      if (xhr.status === 200) {
++        YL.debug('数据保存成功');
++        if (callback) callback(null);
++      } else {
++        YL.debug('数据保存失败，状态码: ' + xhr.status);
++        if (callback) callback(new Error('Failed to save data'));
++      }
++    }
++  };
++  
++  xhr.onerror = function() {
++    YL.debug('网络请求失败');
++    if (callback) callback(new Error('Network error'));
++  };
++  
++  xhr.ontimeout = function() {
++    YL.debug('请求超时');
++    if (callback) callback(new Error('Request timeout'));
++  };
++  
++  xhr.open(remote.method || 'POST', remote.saveUrl);
++  
++  if (remote.headers) {
++    for (var key in remote.headers) {
++      xhr.setRequestHeader(key, remote.headers[key]);
++    }
++  }
++  
++  var payload = JSON.stringify(data);
++  xhr.send(payload);
++};
++
++// 格式化数据为运行时可用
+ YL.format = function (json) {
+   var data = Yuri2.jsonMerge(YL._baseData(), json, true);
+   for (var i in data.apps) {
+@@ -76,6 +181,7 @@ YL.format = function (json) {
+   }
+   return data;
+ };
++
+ YL.import = function (json) {
+   YL.reset();
+   var data = YL.format(json);
+@@ -87,4 +193,108 @@ YL.import = function (json) {
+     }
+   }
+   vue.initRuntime();
++  
++  // 如果启用了远程数据保存，自动保存
++  if (YL.static.dataStorage && YL.static.dataStorage.remote && YL.static.dataStorage.remote.autoSave) {
++    setTimeout(function() {
++      YL.saveToRemote();
++    }, 1000);
++  }
++};
++
++// 保存数据到远程
++YL.saveToRemote = function() {
++  var data = YL.export();
++  YL.saveRemoteData(data, function(err) {
++    if (err) {
++      YL.debug('自动保存失败: ' + err);
++    }
++  });
++};
++
++// 设置自动保存定时器
++YL.setupAutoSave = function() {
++  if (!YL.static.dataStorage || !YL.static.dataStorage.remote || !YL.static.dataStorage.remote.autoSave) {
++    return;
++  }
++  
++  var interval = YL.static.dataStorage.remote.autoSaveInterval || 30000;
++  
++  setInterval(function() {
++    YL.saveToRemote();
++  }, interval);
++  
++  YL.debug('自动保存已启用，间隔: ' + interval + 'ms');
++};
++
++// 数据同步管理器
++YL.dataSync = {
++  // 同步状态
++  syncing: false,
++  // 最后同步时间
++  lastSyncTime: null,
++  
++  // 执行同步
++  sync: function(callback) {
++    var self = this;
++    
++    if (this.syncing) {
++      if (callback) callback(new Error('Sync already in progress'));
++      return;
++    }
++    
++    if (!YL.static.dataStorage || YL.static.dataStorage.mode !== 'hybrid') {
++      if (callback) callback(null);
++      return;
++    }
++    
++    this.syncing = true;
++    YL.debug('开始数据同步...');
++    
++    // 混合模式同步逻辑
++    // 1. 先保存本地更改
++    var localData = YL.export();
++    YL.saveToLocal(localData);
++    
++    // 2. 然后与服务器同步
++    YL.saveRemoteData(localData, function(err) {
++      self.syncing = false;
++      self.lastSyncTime = Date.now();
++      
++      if (err) {
++        YL.debug('数据同步失败: ' + err);
++        if (callback) callback(err);
++      } else {
++        YL.debug('数据同步成功');
++        if (callback) callback(null);
++      }
++    });
++  },
++  
++  // 保存到本地
++  saveToLocal: function(data) {
++    var json = JSON.stringify(data);
++    localStorage.setItem(YL.static.localStorageName, json);
++  }
++};
++
++// 初始化数据存储
++YL.initDataStorage = function() {
++  var config = YL.static.dataStorage;
++  
++  if (!config) {
++    return;
++  }
++  
++  // 设置自动保存
++  YL.setupAutoSave();
++  
++  // 混合模式下设置定期同步
++  if (config.mode === 'hybrid' && config.hybrid && config.hybrid.syncInterval) {
++    setInterval(function() {
++      YL.dataSync.sync();
++    }, config.hybrid.syncInterval);
++    
++    YL.debug('混合模式数据同步已启用，间隔: ' + config.hybrid.syncInterval + 'ms');
++  }
+ };
+\ No newline at end of file
+diff --git a/saves/basic.json b/saves/basic.json
+index d45cc87..e6e01c7 100644
+--- a/saves/basic.json
++++ b/saves/basic.json
+@@ -250,13 +250,13 @@
+       "autoRun": 0,
+       "background": false,
+       "badge": 0,
+-      "desc": "YLUI官方在线文档",
++      "desc": "YLUI官方文档",
+       "icon": {
+         "type": "fa",
+         "content": "book",
+-        "bg": "#d9ab4a"
++        "bg": "#27ae60"
+       },
+-      "openMode": "outer",
++      "openMode": "normal",
+       "plugin": false,
+       "position": {
+         "autoOffset": true,
+@@ -266,17 +266,17 @@
+         "y": "y*0.05"
+       },
+       "version": "1.0.0",
+-      "poweredBy": "Yuri2",
+-      "resizable": false,
+-      "single": false,
++      "poweredBy": "YLUI",
++      "resizable": true,
++      "single": true,
+       "size": {
+         "height": "y*0.8-80",
+-        "width": "x*0.8"
++        "width": "x*0.7"
+       },
+-      "title": "在线文档",
+-      "url": "https://github.com:/yuri2peter/ylui/tree/master/documents",
++      "title": "文档",
++      "url": "./res/apps/yl-documents/index.html",
+       "customTile": "",
+-      "urlRandomToken": false
++      "urlRandomToken": true
+     },
+     "ylui-gitee": {
+       "addressBar": false,

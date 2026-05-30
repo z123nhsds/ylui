@@ -250,13 +250,13 @@
       "autoRun": 0,
       "background": false,
       "badge": 0,
-      "desc": "YLUI官方在线文档",
+      "desc": "YLUI官方文档",
       "icon": {
         "type": "fa",
         "content": "book",
-        "bg": "#d9ab4a"
+        "bg": "#27ae60"
       },
-      "openMode": "outer",
+      "openMode": "normal",
       "plugin": false,
       "position": {
         "autoOffset": true,
@@ -266,17 +266,17 @@
         "y": "y*0.05"
       },
       "version": "1.0.0",
-      "poweredBy": "Yuri2",
-      "resizable": false,
-      "single": false,
+      "poweredBy": "YLUI",
+      "resizable": true,
+      "single": true,
       "size": {
         "height": "y*0.8-80",
-        "width": "x*0.8"
+        "width": "x*0.7"
       },
-      "title": "在线文档",
-      "url": "https://github.com:/yuri2peter/ylui/tree/master/documents",
+      "title": "文档",
+      "url": "./res/apps/yl-documents/index.html",
       "customTile": "",
-      "urlRandomToken": false
+      "urlRandomToken": true
     },
     "ylui-gitee": {
       "addressBar": false,
