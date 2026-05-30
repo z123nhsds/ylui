@@ -4,7 +4,8 @@ YLApp.onReady(function() {
         data: {
             currentDoc: '1.前言.md',
             content: '',
-            loading: true
+            loading: true,
+            docsBasePath: null
         },
         computed: {
             renderedContent: function() {
@@ -12,22 +13,28 @@ YLApp.onReady(function() {
             }
         },
         created: function() {
-            this.loadDoc('1.前言.md');
+            this.resolveDocsPath();
         },
         methods: {
+            resolveDocsPath: function() {
+                var appPath = './';
+                var parentPath = '../../../';
+                this.docsBasePath = parentPath + 'documents/';
+                this.loadDoc('1.前言.md');
+            },
             loadDoc: function(docPath) {
                 var self = this;
                 this.loading = true;
                 this.currentDoc = docPath;
                 
-                var url = '../../../documents/' + docPath;
+                var url = this.docsBasePath + docPath;
                 
                 YL.util.loadContentFromUrl(url, 'GET', function(err, text) {
                     self.loading = false;
                     if (!err) {
                         self.content = text;
                     } else {
-                        self.content = '# 文档加载失败\n\n无法加载文档：' + docPath + '\n\n请检查文档文件是否存在。';
+                        self.content = '# 文档加载失败\n\n无法加载文档：' + docPath + '\n\n路径：' + url + '\n\n请检查文档文件是否存在。';
                     }
                 }, false);
             },

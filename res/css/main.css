@@ -1197,3 +1197,336 @@ body {
     background: url(../../res/img/icon/message.svg) center 56% no-repeat;
     background-size: 22px;
 }
+
+/* ============================================
+   增强响应式布局 - PC/平板/手机适配
+   ============================================ */
+
+/* 平板适配 (768px - 1024px) */
+@media screen and (max-width: 1024px) and (min-width: 768px) {
+    #yl .desktop .win {
+        min-width: 300px;
+    }
+
+    #yl .startMenu {
+        width: 90% !important;
+        max-width: 800px;
+    }
+
+    #yl .tiles-box {
+        width: calc(100% - 280px);
+    }
+
+    #yl .shortcut .icon {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+        line-height: 48px;
+    }
+
+    #yl .shortcut .title {
+        font-size: 11px;
+    }
+
+    #yl .bar {
+        height: 40px;
+    }
+
+    #yl .bar .btn {
+        width: 40px;
+        height: 36px;
+        line-height: 36px;
+    }
+
+    #yl .win .bar .title {
+        font-size: 12px;
+    }
+}
+
+/* 手机适配 (< 768px) */
+@media screen and (max-width: 767px) {
+    #yl {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    #yl .desktop .shortcut {
+        width: 56px;
+    }
+
+    #yl .desktop .shortcut .icon {
+        width: 44px;
+        height: 44px;
+        font-size: 22px;
+        line-height: 44px;
+    }
+
+    #yl .desktop .shortcut .title {
+        font-size: 10px;
+        line-height: 12px;
+        height: 24px;
+        margin-bottom: 2px;
+    }
+
+    #yl.small-screen .desktop {
+        height: calc(100% - 48px);
+    }
+
+    #yl .bar {
+        height: 48px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+    }
+
+    #yl .bar.top {
+        top: 0;
+        bottom: auto;
+    }
+
+    #yl .bar .btn {
+        width: 48px;
+        height: 44px;
+        line-height: 44px;
+    }
+
+    #yl .bar .win-task .title {
+        display: none;
+    }
+
+    #yl .startMenu {
+        width: 100% !important;
+        height: calc(100% - 48px) !important;
+        top: auto !important;
+        bottom: 48px !important;
+        left: 0 !important;
+        border-radius: 0;
+    }
+
+    #yl.small-screen .startMenu .menu {
+        padding: 10px;
+    }
+
+    #yl.small-screen .startMenu .menu .item {
+        padding: 8px 12px;
+    }
+
+    #yl .center {
+        width: 100%;
+        right: -100%;
+        height: calc(100% - 48px);
+        top: auto;
+        bottom: 48px;
+    }
+
+    #yl .tiles-box {
+        width: calc(100% - 56px);
+        padding: 8px;
+    }
+
+    #yl.small-screen .tiles .title {
+        font-size: 11px;
+    }
+
+    #yl .drawer {
+        width: 80%;
+        max-width: 320px;
+    }
+
+    #yl.small-screen .drawer .shortcut {
+        width: 50px;
+    }
+
+    #yl .win {
+        min-width: 280px;
+    }
+
+    #yl.small-screen .win .bar .title {
+        font-size: 12px;
+        width: calc(100% - 100px);
+    }
+
+    #yl.small-screen .win .tools {
+        width: 70px;
+    }
+
+    #yl.small-screen .win .bar .tool {
+        width: 24px;
+        height: 24px;
+        background-size: 16px;
+    }
+
+    #yl .plugin-icons {
+        max-width: 200px;
+    }
+
+    #yl .calendar-box {
+        width: 300px;
+        right: 0;
+        left: auto;
+    }
+}
+
+/* 横屏适配 */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    #yl .startMenu {
+        height: calc(100% - 40px) !important;
+    }
+
+    #yl .center {
+        height: calc(100% - 40px);
+    }
+
+    #yl .tiles-box {
+        padding: 4px;
+    }
+
+    #yl .desktop .shortcut .icon {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+        line-height: 36px;
+    }
+
+    #yl .desktop .shortcut .title {
+        font-size: 9px;
+        height: 18px;
+    }
+}
+
+/* 超大屏幕适配 (> 1920px) */
+@media screen and (min-width: 1920px) {
+    #yl .desktop .shortcut .icon {
+        width: 72px;
+        height: 72px;
+        font-size: 36px;
+        line-height: 72px;
+    }
+
+    #yl .desktop .shortcut .title {
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    #yl .startMenu {
+        width: 1000px !important;
+    }
+
+    #yl .center {
+        width: 420px;
+    }
+}
+
+/* 触摸设备优化 */
+@media (hover: none) and (pointer: coarse) {
+    #yl .shortcut:hover {
+        border: 1px solid transparent;
+        background-color: transparent;
+    }
+
+    #yl .shortcut:active {
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        background-color: rgba(239, 255, 236, 0.25);
+    }
+
+    #yl .tiles .vue-grid-item:hover {
+        opacity: 0.9;
+        box-shadow: none;
+    }
+
+    #yl .tiles .vue-grid-item:active {
+        opacity: 1;
+        box-shadow: inset 0 0 0 2px white;
+    }
+
+    #yl .bar .btn:hover {
+        background-color: transparent;
+    }
+
+    #yl .bar .btn:active {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    #yl .win .bar .title {
+        cursor: default;
+    }
+}
+
+/* 安全区域适配 - iPhone X 及以上 */
+@supports (padding: env(safe-area-inset-bottom)) {
+    #yl .bar {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    #yl.small-screen .center {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    #yl .startMenu {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* Windows 风格组件增强 */
+#yl .startMenu {
+    overflow: hidden;
+}
+
+#yl .tiles .vue-grid-item .tile {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#yl .tiles .vue-grid-item .tile:active {
+    transform: scale(0.98);
+}
+
+#yl .center .msg {
+    animation: slideInMsg 0.3s ease-out;
+}
+
+@keyframes slideInMsg {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+#yl .msg-attention {
+    animation: popInMsg 0.3s ease-out;
+}
+
+@keyframes popInMsg {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    70% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 开始菜单动画增强 */
+#yl .startMenu {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#yl .startMenu .menu .item {
+    transition: background-color 0.2s ease, padding 0.2s ease;
+}
+
+#yl .startMenu .menu .item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#yl .startMenu .menu .item:active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
